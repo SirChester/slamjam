@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class GameController : NetworkBehaviour
 {
 	[SerializeField] private Slider _health;
 	[SerializeField] private RectTransform _room;
 	
+	public GameObject rockPrefab;
+	
 	public void OnRockClicked()
 	{
-		Instantiate(Resources.Load("Prefabs/Rock"), _room);
+		GameObject projectile = Instantiate(rockPrefab, _room);
+		NetworkServer.Spawn(projectile);
+		
 	}
 
 	public void OnScissorClicked()
