@@ -2,15 +2,54 @@
 
 public class Bullet : MonoBehaviour
 {
+	public enum Type
+	{
+		Rock,
+		Paper,
+		Scissors
+	}
+
+	[SerializeField] private Type _type;
+	[SerializeField] private float _forceMultiplier;
+	
+	private Vector2 _direction;
+
+	public Type BulletType
+	{
+		get { return _type; }
+	}
+
+	private Rigidbody2D _rb;
+
 	private void Awake()
 	{
-		GetComponent<Rigidbody2D>().AddForce(Vector2.right * 10000.0f);
+		_rb = GetComponent<Rigidbody2D>();
+	}
+
+	public void PushTo(bool enemy)
+	{
+		_direction = enemy ? Vector2.right : Vector2.left;
+		_rb.AddForce(_direction * _forceMultiplier);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
-		Destroy(gameObject);
-//		if (coll.gameObject.tag == "Enemy")
+		var collideBullet = coll.gameObject.GetComponent<Bullet>();
+		
+		var needDestroy = coll.gameObject.CompareTag("Enemy");
+		needDestroy |=  coll.gameObject.CompareTag("Player");
+		if (collideBullet != null)
+		{
+			needDestroy |= _type == Type.Paper && collideBullet.BulletType == Type.Scissors;
+			needDestroy |= _type == Type.Scissors && collideBullet.BulletType == Type.Rock;
+			needDestroy |= _type == Type.Rock && collideBullet.BulletType == Type.Paper;
+			needDestroy |= _type == collideBullet.BulletType;
+		}
+		if (needDestroy)
+		{
+			Destroy(gameObject);
+		}
+		coll.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * -_forceMultiplier);
 //			coll.gameObject.SendMessage("ApplyDamage", 10);
 	}
 }
