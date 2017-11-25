@@ -11,12 +11,18 @@ public class Bullet : MonoBehaviour
 
 	[SerializeField] private Type _type;
 	[SerializeField] private float _forceMultiplier;
+	[SerializeField] private float _cooldown;
 	
 	private Vector2 _direction;
 
 	public Type BulletType
 	{
 		get { return _type; }
+	}
+
+	public float Cooldown
+	{
+		get { return _cooldown; }
 	}
 
 	private Rigidbody2D _rb;

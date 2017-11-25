@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+	[SerializeField] private float _movementCooldown;
+
 	public Action OnHpChanged;
 
-	protected Vector2 _positionOnBoard;
+	public Vector2 PositionOnBoard;
 	private int HorLimit = 2;
 	private int VertLimit = 4;
 
@@ -24,11 +27,7 @@ public class Character : MonoBehaviour
 		}
 	}
 
-	public Vector2 PositionOnBoard
-	{
-		get { return _positionOnBoard; }
-		set { _positionOnBoard = value; }
-	}
+	public bool CanMove { get; private set; }
 
 	private void Awake()
 	{
@@ -39,43 +38,65 @@ public class Character : MonoBehaviour
 
 	public void Up()
 	{
-		if (_positionOnBoard.y > 0)
+		if (PositionOnBoard.y > 0)
 		{
-			_positionOnBoard.y--;
+			PositionOnBoard.y--;
 		}
 		SetPosition();
 	}
 
 	public void Down()
 	{
-		if (_positionOnBoard.y < VertLimit)
+		if (PositionOnBoard.y < VertLimit)
 		{
-			_positionOnBoard.y++;
+			PositionOnBoard.y++;
 		}
 		SetPosition();
 	}
 
 	public void Left()
 	{
-		if (_positionOnBoard.x > 0)
+		if (PositionOnBoard.x > 0)
 		{
-			_positionOnBoard.x--;
+			PositionOnBoard.x--;
 		}
 		SetPosition();
 	}
 
 	public void Right()
 	{
-		if (_positionOnBoard.x < HorLimit)
+		if (PositionOnBoard.x < HorLimit)
 		{
-			_positionOnBoard.x++;
+			PositionOnBoard.x++;
 		}
 		SetPosition();
 	}
 
-	protected virtual void InitializePosition() {}
-	protected virtual void SetPosition() {}
-	public virtual void ShootRock() {}
-	public virtual void ShootScissor() {}
-	public virtual void ShootPaper() {}
+	private IEnumerator LockMovement()
+	{
+		CanMove = false;
+		yield return new WaitForSeconds(_movementCooldown);
+		CanMove = true;
+	}
+
+	protected virtual void InitializePosition()
+	{
+	}
+
+	protected virtual void SetPosition()
+	{
+		StartCoroutine(LockMovement());
+	}
+
+	public virtual void ShootRock()
+	{
+	}
+
+	public virtual void ShootScissor()
+	{
+	}
+
+	public virtual void ShootPaper()
+	{
+	}
 }

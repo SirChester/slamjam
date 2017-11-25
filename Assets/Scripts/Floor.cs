@@ -82,7 +82,7 @@ public class Floor : MonoBehaviour
         public void Damage(int damage)
         {
             Health -= damage;
-            SpriteRenderer.sprite
+//            SpriteRenderer.sprite
         }
     }
 }

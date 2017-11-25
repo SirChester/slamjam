@@ -4,13 +4,14 @@ public class Player : Character
 {
 	protected override void InitializePosition()
 	{
-		_positionOnBoard = Vector2.zero;
+		PositionOnBoard = Vector2.zero;
 	}
 
 	protected override void SetPosition()
 	{
-		var pos = new Vector2(_positionOnBoard.x * 50.0f, _positionOnBoard.y * -50.0f);
+		var pos = new Vector2(PositionOnBoard.x * 50.0f, PositionOnBoard.y * -50.0f);
 		GetComponent<RectTransform>().anchoredPosition = pos;
+		base.SetPosition();
 	}
 
 	public override void ShootRock()
