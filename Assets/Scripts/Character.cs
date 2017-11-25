@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
 	private int _hp;
 	private bool _movementLocked;
 	private float _chargeTime;
+	private Coroutine _chargeCoroutine;
 
 	public int Hp
 	{
@@ -54,10 +55,10 @@ public class Character : MonoBehaviour
 		get { return !_movementLocked; }
 		private set { _movementLocked = value; }
 	}
-	
-	public bool CanSpellUltimateAbility()
+
+	public float ChargeTime
 	{
-		return _chargeTime < 0;
+		get { return _chargeTime; }
 	}
 
 	public bool HasInvulnerability { get; set; }
@@ -164,27 +165,30 @@ public class Character : MonoBehaviour
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
 	}
 	
-	public void StartShootByIndexWithCharge(int idx)
+	public void StartShootWithCharge()
 	{
 		_movementLocked = true;
-		StartCoroutine(ShootByIndexWithCharge(idx));
+		_chargeCoroutine = StartCoroutine(ShootWithChargeCoroutine());
 	}
 	
-	public void StopShootByIndexWithCharge(int idx)
+	public void StopShootWithCharge()
 	{
 		_movementLocked = false;
 		_chargeTime = _chargeDefaultTime;
-		StopCoroutine(ShootByIndexWithCharge(idx));
+		if (_chargeCoroutine != null)
+		{
+			StopCoroutine(_chargeCoroutine);
+		}
 	}
 
-	private IEnumerator ShootByIndexWithCharge(int idx)
+	private IEnumerator ShootWithChargeCoroutine()
 	{
 		while (_chargeTime > 0)
 		{
 			yield return null;
 			_chargeTime -= Time.deltaTime;
 		}
-		var obj = Weapon.ShootByType(_weapons[idx].BulletType, gameObject.name);
+		var obj = Weapon.ShootByType(_weapons[1].BulletType, gameObject.name);
 		obj.transform.position = _bulletPlace.position;
 		var weapon = obj.GetComponent<Weapon>();
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;

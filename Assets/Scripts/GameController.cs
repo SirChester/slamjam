@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField] private Slider _playerHealth;
 	[SerializeField] private Slider _enemyHealth;
+	[SerializeField] private Slider _playerCharge;
+	[SerializeField] private Slider _enemyCharge;
 	[SerializeField] private Character _player;
 	[SerializeField] private Character _enemy;
 	[SerializeField] private Floor _playerFloor;
@@ -191,6 +193,9 @@ public class GameController : MonoBehaviour
 		{
 			return;
 		}
+
+		_playerCharge.value = _player.ChargeTime;
+		_enemyCharge.value = _enemy.ChargeTime;
 		
 		UpdatePlayerMovement();
 		UpdatePlayerShooting();
@@ -257,11 +262,11 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.G))
 		{
-			_player.StartShootByIndexWithCharge(1);
+			_player.StartShootWithCharge();
 		}
 		if (Input.GetKeyUp(KeyCode.G))
 		{
-			_player.StopShootByIndexWithCharge(1);
+			_player.StopShootWithCharge();
 		}
 //		if (Input.GetKeyDown(KeyCode.H))
 //		{
@@ -277,11 +282,11 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.O))
 		{
-			_enemy.StartShootByIndexWithCharge(1);
+			_enemy.StartShootWithCharge();
 		}
 		if (Input.GetKeyUp(KeyCode.O))
 		{
-			_enemy.StopShootByIndexWithCharge(1);
+			_enemy.StopShootWithCharge();
 		}
 //		if (Input.GetKeyDown(KeyCode.P))
 //		{
