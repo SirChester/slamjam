@@ -63,6 +63,8 @@ public class Character : MonoBehaviour
 		get { return _chargeTime; }
 	}
 
+	public bool ChargeAvailable { get; private set; }
+
 	public bool HasInvulnerability { get; set; }
 //	public float HasInvulnerability { get; private set; }
 
@@ -220,13 +222,16 @@ public class Character : MonoBehaviour
 			yield return null;
 			_chargeTime -= Time.deltaTime;
 		}
-		var obj = Weapon.ShootByType(_weapons[1].BulletType, gameObject.name);
-		obj.transform.position = _bulletPlace.position;
-		var weapon = obj.GetComponent<Weapon>();
-		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
+		ChargeAvailable = true;
+	}
+
+	public void ShootCharge()
+	{
+		ShootByIndex(1);
 		_movementLocked = false;
 		_chargeTime = _chargeDefaultTime;
 		StartCoroutine(PlayAnimation(2));
+		ChargeAvailable = false;
 	}
 	
 	public void MakeDamage(int damage)

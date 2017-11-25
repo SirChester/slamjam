@@ -135,60 +135,6 @@ public class GameController : MonoBehaviour
 		_gameStarted = false;
 	}
 
-	public void OnRockClicked(bool enemy)
-	{
-		if (enemy)
-		{
-			if (_enemy.CanShootByIndex(0))
-			{
-				_enemy.ShootByIndex(0);
-			}
-		}
-		else
-		{
-			if (_player.CanShootByIndex(0))
-			{
-				_player.ShootByIndex(0);
-			}
-		}
-	}
-
-	public void OnScissorClicked(bool enemy)
-	{
-		if (enemy)
-		{
-			if (_enemy.CanShootByIndex(1))
-			{
-				_enemy.ShootByIndex(1);
-			}
-		}
-		else
-		{
-			if (_player.CanShootByIndex(1))
-			{
-				_player.ShootByIndex(1);
-			}
-		}
-	}
-
-	public void OnPaperClicked(bool enemy)
-	{
-		if (enemy)
-		{
-			if (_enemy.CanShootByIndex(2))
-			{
-				_enemy.ShootByIndex(2);
-			}
-		}
-		else
-		{
-			if (_player.CanShootByIndex(2))
-			{
-				_player.ShootByIndex(2);
-			}
-		}
-	}
-
 	private void Update()
 	{
 		if (!_gameStarted)
@@ -258,42 +204,48 @@ public class GameController : MonoBehaviour
 	
 	private void UpdatePlayerShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.F) && _player.CanMove)
-		{
-			OnRockClicked(false);
-		}
-		if (Input.GetKeyDown(KeyCode.G))
+		if (Input.GetKeyDown(KeyCode.LeftShift))
 		{
 			_player.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.G))
+		if (Input.GetKeyUp(KeyCode.LeftShift))
 		{
-			_player.StopShootWithCharge();
+			if (_player.ChargeAvailable)
+			{
+				_player.ShootCharge();
+			}
+			else
+			{
+				_player.StopShootWithCharge();
+				if (_player.CanShootByIndex(0))
+				{
+					_player.ShootByIndex(0);
+				}
+			}
 		}
-//		if (Input.GetKeyDown(KeyCode.H))
-//		{
-//			OnPaperClicked(false);
-//		}
 	}
 	
 	private void UpdateEnemyShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.I) && _enemy.CanMove)
-		{
-			OnRockClicked(true);
-		}
-		if (Input.GetKeyDown(KeyCode.O))
+		if (Input.GetKeyDown(KeyCode.B))
 		{
 			_enemy.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.O))
+		if (Input.GetKeyUp(KeyCode.B))
 		{
-			_enemy.StopShootWithCharge();
+			if (_enemy.ChargeAvailable)
+			{
+				_enemy.ShootCharge();
+			}
+			else
+			{
+				_enemy.StopShootWithCharge();
+				if (_enemy.CanShootByIndex(0))
+				{
+					_enemy.ShootByIndex(0);
+				}
+			}
 		}
-//		if (Input.GetKeyDown(KeyCode.P))
-//		{
-//			OnPaperClicked(true);
-//		}
 	}
 	
 	private void UpdateFloors()
