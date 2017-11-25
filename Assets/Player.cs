@@ -76,7 +76,21 @@ public class Player : MonoBehaviour
 	public void ShootRock()
 	{
 		var obj = Instantiate(Resources.Load("Prefabs/Rock"), gameObject.transform.parent) as GameObject;
-		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 55.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.GetComponent<Bullet>().PushTo(true);
+	}
+	
+	public void ShootScissor()
+	{
+		var obj = Instantiate(Resources.Load("Prefabs/Scissor"), gameObject.transform.parent) as GameObject;
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.GetComponent<Bullet>().PushTo(true);
+	}
+	
+	public void ShootPaper()
+	{
+		var obj = Instantiate(Resources.Load("Prefabs/Paper"), gameObject.transform.parent) as GameObject;
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f, gameObject.transform.localPosition.y - 12.5f);
 		obj.GetComponent<Bullet>().PushTo(true);
 	}
 }

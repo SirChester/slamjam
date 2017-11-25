@@ -80,4 +80,18 @@ public class Enemy : MonoBehaviour
 		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f, gameObject.transform.localPosition.y - 12.5f);
 		obj.GetComponent<Bullet>().PushTo(false);
 	}
+	
+	public void ShootScissor()
+	{
+		var obj = Instantiate(Resources.Load("Prefabs/Scissor"), gameObject.transform.parent) as GameObject;
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.GetComponent<Bullet>().PushTo(false);
+	}
+	
+	public void ShootPaper()
+	{
+		var obj = Instantiate(Resources.Load("Prefabs/Paper"), gameObject.transform.parent) as GameObject;
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.GetComponent<Bullet>().PushTo(false);
+	}
 }
