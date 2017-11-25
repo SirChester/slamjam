@@ -32,40 +32,6 @@ public class Floor : MonoBehaviour
         return _cells[(int) position.x, (int) position.y].Damage(_playerTickDamage);
     }
 
-    private int GetY(Transform floorCellTransform)
-    {
-        if (floorCellTransform.position.y < -0.5)
-        {
-            return 0;
-        }
-        if (floorCellTransform.position.y < 0.5)
-        {
-            return 1;
-        }
-        if (floorCellTransform.position.y < 1)
-        {
-            return 2;
-        }
-        if (floorCellTransform.position.y < 2)
-        {
-            return 3;
-        }
-        return 4;
-    }
-
-    private int GetX(Transform floorCellTransform)
-    {
-        if (floorCellTransform.position.x < 3.2)
-        {
-            return 0;
-        }
-        if (floorCellTransform.position.x < 4)
-        {
-            return 1;
-        }
-        return 2;
-    }
-
     [Serializable]
     public struct FloorCellInfo
     {
@@ -88,7 +54,7 @@ public class Floor : MonoBehaviour
             MaxHealth = cellHealth;
         }
 
-        //return true if has return damage
+        //return true if has return damage from cell to player
         public bool Damage(double damageToCell)
         {
             Health -= damageToCell;
