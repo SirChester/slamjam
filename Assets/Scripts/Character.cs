@@ -22,8 +22,9 @@ public class Character : MonoBehaviour
 
 	public Vector2 PositionOnBoard;
 
-	private float _jumpAnimationTime = 0.5f;
-	private float _attackAnimationTime = 0.7f;
+	[SerializeField] private float _jumpAnimationTime = 0.5f;
+	[SerializeField] private float _attackAnimationTime = 0.7f;
+	[SerializeField] private float _hitTakenAnimationTime = 0.3f;
 	
 	private int HorLimit = 2;
 	private int VertLimit = 4;
@@ -90,6 +91,9 @@ public class Character : MonoBehaviour
 		InitializePosition();
 		Hp = _maxHp;
 		_chargeTime = _chargeDefaultTime;
+		
+		var animator = GetComponent<Animator>();
+		animator.SetInteger("State", 0);
 	}
 	
 	private IEnumerator PlayAnimation(int animationId)
@@ -104,6 +108,9 @@ public class Character : MonoBehaviour
 		} else if (animationId == 2)
 		{
 			animationTime = _attackAnimationTime;
+		} else if (animationId == 3)
+		{
+			animationTime = _hitTakenAnimationTime;
 		}
 		else
 		{
@@ -242,6 +249,7 @@ public class Character : MonoBehaviour
 		}
 		
 		Hp -= damage;
+		StartCoroutine(PlayAnimation(3));
 		StartCoroutine(ApplyInvul());
 	}
 
