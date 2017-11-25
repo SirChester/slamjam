@@ -39,8 +39,8 @@ public class GameController : MonoBehaviour
 		{
 			_playerScore++;
 			_playerScoreLbl.text = _playerScore.ToString();
-			_enemy.Hp = 100;
-			_player.Hp = 100;
+			_enemy.ResetChar();
+			_player.ResetChar();
 		}
 	}
 	
@@ -51,8 +51,8 @@ public class GameController : MonoBehaviour
 		{
 			_enemyScore++;
 			_enemyScoreLbl.text = _enemyScore.ToString();
-			_enemy.Hp = 100;
-			_player.Hp = 100;
+			_enemy.ResetChar();
+			_player.ResetChar();
 		}
 	}
 

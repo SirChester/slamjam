@@ -7,6 +7,8 @@ public class Character : MonoBehaviour
 {
 	[SerializeField] private float _movementCooldown;
 	[SerializeField] private Weapon[] _weapons;
+	[SerializeField] private Vector2 _initialPos;
+	[SerializeField] private float _step;
 
 	public Action OnHpChanged;
 
@@ -38,9 +40,13 @@ public class Character : MonoBehaviour
 		{
 			_lastShots.Add(_weapons[i].BulletType, 0.0f);
 		}
+		ResetChar();
+	}
+
+	public void ResetChar()
+	{
 		InitializePosition();
 		Hp = 100;
-		SetPosition();
 	}
 
 	public void Up()
@@ -48,8 +54,11 @@ public class Character : MonoBehaviour
 		if (PositionOnBoard.y > 0)
 		{
 			PositionOnBoard.y--;
+			var pos = gameObject.transform.localPosition;
+			pos.y -= _step;
+			gameObject.transform.localPosition= pos;
+			StartCoroutine(LockMovement());
 		}
-		SetPosition();
 	}
 
 	public void Down()
@@ -57,8 +66,11 @@ public class Character : MonoBehaviour
 		if (PositionOnBoard.y < VertLimit)
 		{
 			PositionOnBoard.y++;
+			var pos = gameObject.transform.localPosition;
+			pos.y += _step;
+			gameObject.transform.localPosition= pos;
+			StartCoroutine(LockMovement());
 		}
-		SetPosition();
 	}
 
 	public void Left()
@@ -66,8 +78,11 @@ public class Character : MonoBehaviour
 		if (PositionOnBoard.x > 0)
 		{
 			PositionOnBoard.x--;
+			var pos = gameObject.transform.localPosition;
+			pos.x -= _step;
+			gameObject.transform.localPosition= pos;
+			StartCoroutine(LockMovement());
 		}
-		SetPosition();
 	}
 
 	public void Right()
@@ -75,8 +90,16 @@ public class Character : MonoBehaviour
 		if (PositionOnBoard.x < HorLimit)
 		{
 			PositionOnBoard.x++;
+			var pos = gameObject.transform.localPosition;
+			pos.y += _step;
+			gameObject.transform.localPosition= pos;
+			StartCoroutine(LockMovement());
 		}
-		SetPosition();
+	}
+	
+	private void InitializePosition()
+	{
+		gameObject.transform.localPosition = new Vector3(_initialPos.x, _initialPos.y, 0.0f);
 	}
 	
 	public void ShootByIndex(int idx)
@@ -102,15 +125,6 @@ public class Character : MonoBehaviour
 	public bool CanShootByIndex(int idx)
 	{
 		return Time.realtimeSinceStartup - _lastShots[_weapons[idx].BulletType] > _weapons[idx].Cooldown;
-	}
-
-	protected virtual void SetPosition()
-	{
-		StartCoroutine(LockMovement());
-	}
-	
-	protected virtual void InitializePosition()
-	{
 	}
 	
 	protected virtual void FixBulletPosition(GameObject bullet)
