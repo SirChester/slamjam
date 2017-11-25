@@ -15,6 +15,8 @@ public class Character : MonoBehaviour
 	[SerializeField] private Transform _bulletPlace;
 	[SerializeField] private float _chargeDefaultTime;
 	[SerializeField] private int _maxHp;
+	[SerializeField] private GameObject _halfChargeParticle;
+	[SerializeField] private GameObject _chargeParticle;
 
 	public int AmimationStatus = 0;
 
@@ -31,6 +33,7 @@ public class Character : MonoBehaviour
 	private Dictionary<Weapon.Type, float> _lastShots = new Dictionary<Weapon.Type, float>();
 
 	private int _hp;
+	private int _chargeIndex;
 	private bool _movementLocked;
 	private float _chargeTime;
 	private Coroutine _movementCoroutine;
@@ -66,7 +69,26 @@ public class Character : MonoBehaviour
 		get { return _chargeTime; }
 	}
 
-	public int ChargeIndex { get; private set; }
+	public int ChargeIndex
+	{
+		get { return _chargeIndex; }
+		private set
+		{
+			if (value == 2)
+			{
+				_chargeParticle.SetActive(true);
+			}
+			else if (value == 1)
+			{
+				_halfChargeParticle.SetActive(true);
+			}
+			else
+			{
+				_chargeParticle.SetActive(false);
+				_halfChargeParticle.SetActive(false);
+			}
+		}
+	}
 
 	public bool HasInvulnerability { get; set; }
 //	public float HasInvulnerability { get; private set; }
