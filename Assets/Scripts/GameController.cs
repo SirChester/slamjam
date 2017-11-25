@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
 		_enemy.ResetChar();
 		_player.ResetChar();
 		_playerFloor.Reset();
-		_playerFloor.Reset();
+		_enemyFloor.Reset();
 	}
 
 	private void PlayerHpDidChange()

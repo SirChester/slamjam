@@ -4,7 +4,7 @@ using UnityEngine;
 public class Floor : MonoBehaviour
 {
     [SerializeField] private double _cellHealth = 100;
-    [SerializeField] private double _playerTickDamage = 0.1;
+    [SerializeField] private double _playerTickDamage = 0.3;
 
     [SerializeField] private FloorCellInfo[] _floorCellInfo;
     
@@ -42,7 +42,7 @@ public class Floor : MonoBehaviour
         private int _cellDamageFramesCount = 6;
         
         public SpriteRenderer SpriteRenderer { get; private set; }
-        public double Health { get; private set; }
+        public double Health { get; set; }
         public double MaxHealth { get; private set; }
 
         public FloorCell(SpriteRenderer spriteRenderer, double cellHealth)
@@ -63,6 +63,11 @@ public class Floor : MonoBehaviour
             var newSpriteName = currentSpriteName.Substring(0, currentSpriteName.Length - 1) + frameNum;
             var newSprite = Array.FindAll(_sprites, obj => obj.name == newSpriteName)[0];
 
+            //TODO delete it later
+            var k = 1 - (frameNum - 1.0f) / _cellDamageFramesCount;
+            SpriteRenderer.color = new Color(k, k / 2, k / 2);
+                  
+
             SpriteRenderer.sprite = newSprite;
             return Health <= 0;
         }
@@ -70,6 +75,9 @@ public class Floor : MonoBehaviour
 
     public void Reset()
     {
-        
+        foreach (var cell in _cells)
+        {
+            cell.Health = cell.MaxHealth;
+        }
     }
 }
