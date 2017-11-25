@@ -24,6 +24,12 @@ public class Character : MonoBehaviour
 		}
 	}
 
+	public Vector2 PositionOnBoard
+	{
+		get { return _positionOnBoard; }
+		set { _positionOnBoard = value; }
+	}
+
 	private void Awake()
 	{
 		InitializePosition();

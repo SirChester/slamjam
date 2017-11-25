@@ -99,8 +99,9 @@ public class GameController : MonoBehaviour
 		UpdatePlayerShooting();
 		UpdateEnemyMovement();
 		UpdateEnemyShooting();
+		UpdateFloors();
 	}
-
+	
 	private void UpdatePlayerMovement()
 	{
 		if (_playerMovementLocked)
@@ -190,6 +191,12 @@ public class GameController : MonoBehaviour
 			OnPaperClicked(true);
 		}
 	}
+	
+	private void UpdateFloors()
+	{
+		_playerFloor.damageByPlayer(_player.PositionOnBoard);
+	}
+
 
 	private IEnumerator LockPlayerMovement()
 	{
