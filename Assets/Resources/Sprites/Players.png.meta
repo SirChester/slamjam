@@ -1,11 +1,14 @@
 fileFormatVersion: 2
 guid: dad5e8db4af92a4459d80afdbd625830
-timeCreated: 1511614456
+timeCreated: 1511623023
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: Player_1_idle_1
     21300002: Player_2_idle_1
+    21300004: Player_1_idle_2
+    21300006: Player_1_idle_3
+    21300008: Player_1_idle_4
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -59,7 +62,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -68,7 +71,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -83,12 +86,12 @@ TextureImporter:
       name: Player_1_idle_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 18
+        x: 2
+        y: 20
         width: 15
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -97,12 +100,54 @@ TextureImporter:
       name: Player_2_idle_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
         width: 15
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_1_idle_2
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 20
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_1_idle_3
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 20
+        width: 17
+        height: 19
+      alignment: 9
+      pivot: {x: 0.44512334, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_1_idle_4
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 20
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
