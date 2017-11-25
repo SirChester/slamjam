@@ -67,7 +67,6 @@ public class Floor : MonoBehaviour
             var k = 1 - (frameNum - 1.0f) / _cellDamageFramesCount;
             SpriteRenderer.color = new Color(k, k, k);
 
-
             SpriteRenderer.sprite = newSprite;
             return Health <= 0;
         }
@@ -78,6 +77,7 @@ public class Floor : MonoBehaviour
         foreach (var cell in _cells)
         {
             cell.Health = cell.MaxHealth;
+            cell.SpriteRenderer.color = new Color(1, 1, 1);
         }
     }
 }
