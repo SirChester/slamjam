@@ -37,13 +37,32 @@ public class GameController : MonoBehaviour
 		_enemy.OnHpChanged -= EnemyHpDidChange;
 	}
 
+	public int PlayerScore
+	{
+		get { return _playerScore; }
+		set
+		{
+			_playerScore = value; 
+			_playerScoreLbl.text = _playerScore.ToString();
+		}
+	}
+
+	public int EnemyScore
+	{
+		get { return _enemyScore; }
+		set
+		{
+			_enemyScore = value; 
+			_enemyScoreLbl.text = _enemyScore.ToString();
+		}
+	}
+
 	private void EnemyHpDidChange()
 	{
 		_enemyHealth.value = _enemy.Hp;
 		if (_enemy.Hp <= 0)
 		{
-			_playerScore++;
-			_playerScoreLbl.text = _playerScore.ToString();
+			PlayerScore++;
 			ResetMatch();
 		}
 	}
@@ -53,8 +72,7 @@ public class GameController : MonoBehaviour
 		_playerHealth.value = _player.Hp;
 		if (_player.Hp <= 0)
 		{
-			_enemyScore++;
-			_enemyScoreLbl.text = _enemyScore.ToString();
+			EnemyScore++;
 			ResetMatch();
 		}
 	}
@@ -99,6 +117,8 @@ public class GameController : MonoBehaviour
 		_resultsScreen.SetActive(true);
 		_resultsLbl.text = _playerScore == 3 ? "PALADIN WINS" : "BEAR WINS";
 		yield return new WaitForSeconds(4.0f);
+		EnemyScore = 0;
+		PlayerScore = 0;
 		_resultsScreen.SetActive(false);
 		_startGameScreen.SetActive(true);
 		_gameStarted = false;
@@ -179,19 +199,19 @@ public class GameController : MonoBehaviour
 			return;
 		}
 		
-		if (Input.GetKeyDown(KeyCode.W))
+		if (Input.GetKey(KeyCode.W))
 		{
 			_player.Up();
 		}
-		if (Input.GetKeyDown(KeyCode.A))
+		if (Input.GetKey(KeyCode.A))
 		{
 			_player.Left();
 		}
-		if (Input.GetKeyDown(KeyCode.S))
+		if (Input.GetKey(KeyCode.S))
 		{
 			_player.Down();
 		}
-		if (Input.GetKeyDown(KeyCode.D))
+		if (Input.GetKey(KeyCode.D))
 		{
 			_player.Right();
 		}
@@ -204,19 +224,19 @@ public class GameController : MonoBehaviour
 			return;
 		}
 		
-		if (Input.GetKeyDown(KeyCode.UpArrow))
+		if (Input.GetKey(KeyCode.UpArrow))
 		{
 			_enemy.Up();
 		}
-		if (Input.GetKeyDown(KeyCode.LeftArrow))
+		if (Input.GetKey(KeyCode.LeftArrow))
 		{
 			_enemy.Left();
 		}
-		if (Input.GetKeyDown(KeyCode.DownArrow))
+		if (Input.GetKey(KeyCode.DownArrow))
 		{
 			_enemy.Down();
 		}
-		if (Input.GetKeyDown(KeyCode.RightArrow))
+		if (Input.GetKey(KeyCode.RightArrow))
 		{
 			_enemy.Right();
 		}
