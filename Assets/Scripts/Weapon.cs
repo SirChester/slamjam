@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
 	[SerializeField] private Type _type;
 	[SerializeField] private float _forceMultiplier;
 	[SerializeField] private float _cooldown;
+	[SerializeField] private int _damage;
 
 	public Type BulletType
 	{
@@ -53,13 +54,13 @@ public class Weapon : MonoBehaviour
 
 		if (coll.gameObject.CompareTag("Enemy"))
 		{
-			coll.gameObject.GetComponent<Enemy>().MakeDamage(10);
+			coll.gameObject.GetComponent<Enemy>().MakeDamage(_damage);
 			Destroy(gameObject);
 		}
 		
 		if (coll.gameObject.CompareTag("Player"))
 		{
-			coll.gameObject.GetComponent<Player>().MakeDamage(10);
+			coll.gameObject.GetComponent<Player>().MakeDamage(_damage);
 			Destroy(gameObject);
 		}
 	}
