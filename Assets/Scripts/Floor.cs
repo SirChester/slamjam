@@ -1,39 +1,35 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
     [SerializeField] private double _cellHealth = 100;
     [SerializeField] private double _playerTickDamage = 0.1;
+
+    [SerializeField] private FloorCellInfo[] _floorCellInfo;
     
     private FloorCell[,] _cells = new FloorCell[3, 5];
     private static Sprite[] _sprites;
 
     private void Awake()
     {
-        var transformComponent = transform;
-        for (int i = 0; i < transformComponent.childCount; ++i)
+        foreach (var floorCell in _floorCellInfo)
         {
-            var floorCell = transformComponent.GetChild(i);
-            if (floorCell.name.ToLower().StartsWith("slate"))
-            {
-                continue;
-            }
-            var x = GetX(floorCell.transform);
-            var y = GetY(floorCell.transform);
-
-            var spriteRenderer = floorCell.GetComponent<SpriteRenderer>();
+            var spriteRenderer = floorCell._gameObject.GetComponent<SpriteRenderer>();
             var cell = new FloorCell(spriteRenderer, _cellHealth);
+            var x = (int) floorCell._coordinates.x;
+            var y = (int) floorCell._coordinates.y;
+            
             _cells[x, y] = cell;
+            
         }
 
         _sprites = Resources.LoadAll<Sprite>("Sprites/grassland_spritesheet");
     }
 
-    public void damageByPlayer(Vector2 position)
+    public bool damageByPlayer(Vector2 position)
     {
-        _cells[(int) position.x, (int) position.y].Damage(_playerTickDamage);
+        return _cells[(int) position.x, (int) position.y].Damage(_playerTickDamage);
     }
 
     private int GetY(Transform floorCellTransform)
@@ -70,6 +66,12 @@ public class Floor : MonoBehaviour
         return 2;
     }
 
+    [Serializable]
+    public struct FloorCellInfo
+    {
+        public Vector2 _coordinates;
+        public GameObject _gameObject;
+    }
 
     private class FloorCell
     {
@@ -86,9 +88,11 @@ public class Floor : MonoBehaviour
             MaxHealth = cellHealth;
         }
 
-        public void Damage(double damage)
+        //return true if has return damage
+        public bool Damage(double damageToCell)
         {
-            Health -= damage;
+            Health -= damageToCell;
+            Health = Math.Max(0, Health);
             int frameNum = (int) ((MaxHealth - Health) * _cellDamageFramesCount / MaxHealth + 1);
             frameNum = Math.Min(_cellDamageFramesCount, frameNum);
             var currentSpriteName = SpriteRenderer.sprite.name;
@@ -96,6 +100,7 @@ public class Floor : MonoBehaviour
             var newSprite = Array.FindAll(_sprites, obj => obj.name == newSpriteName)[0];
 
             SpriteRenderer.sprite = newSprite;
+            return Health <= 0;
         }
     }
 }

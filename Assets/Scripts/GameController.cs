@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 	[SerializeField] private Floor _enemyFloor;
 	[SerializeField] private Text _playerScoreLbl;
 	[SerializeField] private Text _enemyScoreLbl;
+	[SerializeField] private int _damageByFloor;
 
 	private bool _playerMovementLocked;
 	private bool _enemyMovementLocked;
@@ -184,6 +185,13 @@ public class GameController : MonoBehaviour
 	
 	private void UpdateFloors()
 	{
-		_playerFloor.damageByPlayer(_player.PositionOnBoard);
+		if (_playerFloor.damageByPlayer(_player.PositionOnBoard))
+		{
+			_player.MakeDamage(_damageByFloor);
+		}
+		if (_enemyFloor.damageByPlayer(_enemy.PositionOnBoard))
+		{
+			_enemy.MakeDamage(_damageByFloor);
+		}
 	}
 }

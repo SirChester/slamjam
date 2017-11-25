@@ -71,6 +71,11 @@ public class Character : MonoBehaviour
 		}
 		SetPosition();
 	}
+	
+	public void MakeDamage(int damage)
+	{
+		Hp -= damage;
+	}
 
 	private IEnumerator LockMovement()
 	{

@@ -57,13 +57,13 @@ public class Bullet : MonoBehaviour
 
 		if (coll.gameObject.CompareTag("Enemy"))
 		{
-			coll.gameObject.GetComponent<Enemy>().Hp -= 10;
+			coll.gameObject.GetComponent<Enemy>().MakeDamage(10);
 			Destroy(gameObject);
 		}
 		
 		if (coll.gameObject.CompareTag("Player"))
 		{
-			coll.gameObject.GetComponent<Player>().Hp -= 10;
+			coll.gameObject.GetComponent<Player>().MakeDamage(10);
 			Destroy(gameObject);
 		}
 	}
