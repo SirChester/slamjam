@@ -6,6 +6,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
 	[SerializeField] private float _movementCooldown;
+	[SerializeField] private float _invulnerabilityCooldown = 0.3f;
 	[SerializeField] private Weapon[] _weapons;
 	[SerializeField] private Vector2 _initialPos;
 	[SerializeField] private float _step;
@@ -33,6 +34,7 @@ public class Character : MonoBehaviour
 	}
 
 	public bool CanMove { get; private set; }
+	public bool HasInvulnerability { get; private set; }
 
 	private void Awake()
 	{
@@ -110,9 +112,13 @@ public class Character : MonoBehaviour
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
 	}
 	
-	public void MakeDamage(int damage)
+	public IEnumerator MakeDamage(int damage)
 	{
+		if (HasInvulnerability) yield break;
 		Hp -= damage;
+		HasInvulnerability = true;
+		yield return new WaitForSeconds(_invulnerabilityCooldown);
+		HasInvulnerability = false;
 	}
 
 	private IEnumerator LockMovement()
