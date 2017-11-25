@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
 	public enum Type
 	{
@@ -12,8 +13,6 @@ public class Bullet : MonoBehaviour
 	[SerializeField] private Type _type;
 	[SerializeField] private float _forceMultiplier;
 	[SerializeField] private float _cooldown;
-	
-	private Vector2 _direction;
 
 	public Type BulletType
 	{
@@ -25,22 +24,29 @@ public class Bullet : MonoBehaviour
 		get { return _cooldown; }
 	}
 
-	private Rigidbody2D _rb;
-
+	public static GameObject ShootByType(Type type)
+	{
+		var path = "Prefabs/Rock";
+		switch (type)
+		{
+			case Type.Paper:
+				path = "Prefabs/Paper";
+				break;
+			case Type.Scissors:
+				path = "Prefabs/Scissor";
+				break;
+		}
+		return Instantiate(Resources.Load(path)) as GameObject;
+	}
+	
 	private void Awake()
 	{
-		_rb = GetComponent<Rigidbody2D>();
+		GetComponent<Rigidbody2D>().AddForce(Vector2.right * _forceMultiplier);
 	}
-
-	public void PushTo(bool enemy)
-	{
-		_direction = enemy ? Vector2.right : Vector2.left;
-		_rb.AddForce(_direction * _forceMultiplier);
-	}
-
+	
 	private void OnCollisionEnter2D(Collision2D coll)
 	{
-		var collideBullet = coll.gameObject.GetComponent<Bullet>();
+		var collideBullet = coll.gameObject.GetComponent<Weapon>();
 		if (collideBullet != null)
 		{
 			var needDestroy = _type == collideBullet.BulletType;
@@ -50,7 +56,7 @@ public class Bullet : MonoBehaviour
 			if (needDestroy)
 			{
 				Destroy(gameObject);
-				coll.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * -_forceMultiplier);
+				coll.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right * -_forceMultiplier);
 				return;
 			}
 		}

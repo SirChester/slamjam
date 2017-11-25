@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
 	[SerializeField] private float _movementCooldown;
+	[SerializeField] private Weapon[] _weapons;
 
 	public Action OnHpChanged;
 
 	public Vector2 PositionOnBoard;
 	private int HorLimit = 2;
 	private int VertLimit = 4;
+	private Dictionary<Weapon.Type, float> _lastShots = new Dictionary<Weapon.Type, float>();
 
 	private int _hp;
 
@@ -31,6 +34,10 @@ public class Character : MonoBehaviour
 
 	private void Awake()
 	{
+		for (int i = 0; i < _weapons.Length; ++i)
+		{
+			_lastShots.Add(_weapons[i].BulletType, 0.0f);
+		}
 		InitializePosition();
 		Hp = 100;
 		SetPosition();
@@ -72,6 +79,14 @@ public class Character : MonoBehaviour
 		SetPosition();
 	}
 	
+	public void ShootByIndex(int idx)
+	{
+		var obj = Weapon.ShootByType(_weapons[idx].BulletType);
+		FixBulletPosition(obj);
+		var weapon = obj.GetComponent<Weapon>();
+		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
+	}
+	
 	public void MakeDamage(int damage)
 	{
 		Hp -= damage;
@@ -84,24 +99,21 @@ public class Character : MonoBehaviour
 		CanMove = true;
 	}
 
-	protected virtual void InitializePosition()
+	public bool CanShootByIndex(int idx)
 	{
+		return Time.realtimeSinceStartup - _lastShots[_weapons[idx].BulletType] > _weapons[idx].Cooldown;
 	}
 
 	protected virtual void SetPosition()
 	{
 		StartCoroutine(LockMovement());
 	}
-
-	public virtual void ShootRock()
+	
+	protected virtual void InitializePosition()
 	{
 	}
-
-	public virtual void ShootScissor()
-	{
-	}
-
-	public virtual void ShootPaper()
+	
+	protected virtual void FixBulletPosition(GameObject bullet)
 	{
 	}
 }
