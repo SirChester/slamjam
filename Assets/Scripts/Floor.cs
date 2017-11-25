@@ -7,7 +7,7 @@ public class Floor : MonoBehaviour
     [SerializeField] private double _playerTickDamage = 0.3;
 
     [SerializeField] private FloorCellInfo[] _floorCellInfo;
-    
+
     private FloorCell[,] _cells = new FloorCell[3, 5];
     private static Sprite[] _sprites;
 
@@ -40,7 +40,7 @@ public class Floor : MonoBehaviour
     private class FloorCell
     {
         private int _cellDamageFramesCount = 6;
-        
+
         public SpriteRenderer SpriteRenderer { get; private set; }
         public double Health { get; set; }
         public double MaxHealth { get; private set; }
@@ -65,8 +65,8 @@ public class Floor : MonoBehaviour
 
             //TODO delete it later
             var k = 1 - (frameNum - 1.0f) / _cellDamageFramesCount;
-            SpriteRenderer.color = new Color(k, k / 2, k / 2);
-                  
+            SpriteRenderer.color = new Color(k, k, k);
+
 
             SpriteRenderer.sprite = newSprite;
             return Health <= 0;
