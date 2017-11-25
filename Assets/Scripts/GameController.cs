@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-	[SerializeField] private Slider _playerHealth;
-	[SerializeField] private Slider _enemyHealth;
+	[SerializeField] private Image _playerHealth;
+	[SerializeField] private Image _enemyHealth;
 	[SerializeField] private Slider _playerCharge;
 	[SerializeField] private Slider _enemyCharge;
 	[SerializeField] private Character _player;
@@ -33,9 +33,6 @@ public class GameController : MonoBehaviour
 	{
 		_player.OnHpChanged += PlayerHpDidChange;
 		_enemy.OnHpChanged += EnemyHpDidChange;
-
-		_playerHealth.maxValue = _player.MaxHp;
-		_enemyHealth.maxValue = _enemy.MaxHp;
 	}
 
 	private void OnDestroy()
@@ -66,7 +63,7 @@ public class GameController : MonoBehaviour
 
 	private void EnemyHpDidChange()
 	{
-		_enemyHealth.value = _enemy.Hp;
+		_enemyHealth.fillAmount = (float)_enemy.Hp / (float)_enemy.MaxHp;
 		if (_enemy.Hp <= 0)
 		{
 			PlayerScore++;
@@ -76,7 +73,7 @@ public class GameController : MonoBehaviour
 	
 	private void PlayerHpDidChange()
 	{
-		_playerHealth.value = _player.Hp;
+		_playerHealth.fillAmount = (float)_player.Hp / (float)_enemy.MaxHp;
 		if (_player.Hp <= 0)
 		{
 			EnemyScore++;
