@@ -63,7 +63,7 @@ public class Character : MonoBehaviour
 		get { return _chargeTime; }
 	}
 
-	public bool ChargeAvailable { get; private set; }
+	public int ChargeIndex { get; private set; }
 
 	public bool HasInvulnerability { get; set; }
 //	public float HasInvulnerability { get; private set; }
@@ -209,6 +209,7 @@ public class Character : MonoBehaviour
 	{
 		_movementLocked = false;
 		_chargeTime = _chargeDefaultTime;
+		ChargeIndex = 0;
 		if (_chargeCoroutine != null)
 		{
 			StopCoroutine(_chargeCoroutine);
@@ -221,17 +222,12 @@ public class Character : MonoBehaviour
 		{
 			yield return null;
 			_chargeTime -= Time.deltaTime;
+			if (_chargeTime < _chargeDefaultTime / 2)
+			{
+				ChargeIndex = 1;
+			}
 		}
-		ChargeAvailable = true;
-	}
-
-	public void ShootCharge()
-	{
-		ShootByIndex(1);
-		_movementLocked = false;
-		_chargeTime = _chargeDefaultTime;
-		StartCoroutine(PlayAnimation(2));
-		ChargeAvailable = false;
+		ChargeIndex = 2;
 	}
 	
 	public void MakeDamage(int damage)

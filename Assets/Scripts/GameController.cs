@@ -207,18 +207,11 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
-			if (_player.ChargeAvailable)
+			if (_player.CanShootByIndex(_player.ChargeIndex))
 			{
-				_player.ShootCharge();
+				_player.ShootByIndex(_player.ChargeIndex);
 			}
-			else
-			{
-				_player.StopShootWithCharge();
-				if (_player.CanShootByIndex(0))
-				{
-					_player.ShootByIndex(0);
-				}
-			}
+			_player.StopShootWithCharge();
 		}
 	}
 	
@@ -230,18 +223,11 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyUp(KeyCode.Return))
 		{
-			if (_enemy.ChargeAvailable)
+			if (_enemy.CanShootByIndex(_enemy.ChargeIndex))
 			{
-				_enemy.ShootCharge();
+				_enemy.ShootByIndex(_enemy.ChargeIndex);
 			}
-			else
-			{
-				_enemy.StopShootWithCharge();
-				if (_enemy.CanShootByIndex(0))
-				{
-					_enemy.ShootByIndex(0);
-				}
-			}
+			_enemy.StopShootWithCharge();
 		}
 	}
 	
