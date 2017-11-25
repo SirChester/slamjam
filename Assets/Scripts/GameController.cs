@@ -6,8 +6,8 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField] private Slider _playerHealth;
 	[SerializeField] private Slider _enemyHealth;
-	[SerializeField] private Player _player;
-	[SerializeField] private Enemy _enemy;
+	[SerializeField] private Character _player;
+	[SerializeField] private Character _enemy;
 	[SerializeField] private Floor _playerFloor;
 	[SerializeField] private Floor _enemyFloor;
 	[SerializeField] private Text _playerScoreLbl;
@@ -61,7 +61,6 @@ public class GameController : MonoBehaviour
 		{
 			_enemy.ShootRock();
 		}
-
 		else
 		{
 			_player.ShootRock();
@@ -74,7 +73,6 @@ public class GameController : MonoBehaviour
 		{
 			_enemy.ShootScissor();
 		}
-
 		else
 		{
 			_player.ShootScissor();
@@ -103,7 +101,7 @@ public class GameController : MonoBehaviour
 
 	private void UpdatePlayerMovement()
 	{
-		if (_playerMovementLocked)
+		if (!_player.CanMove)
 		{
 			return;
 		}
@@ -111,28 +109,24 @@ public class GameController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.W))
 		{
 			_player.Up();
-			StartCoroutine(LockPlayerMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.A))
 		{
 			_player.Left();
-			StartCoroutine(LockPlayerMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.S))
 		{
 			_player.Down();
-			StartCoroutine(LockPlayerMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.D))
 		{
 			_player.Right();
-			StartCoroutine(LockPlayerMovement());
 		}
 	}
 	
 	private void UpdateEnemyMovement()
 	{
-		if (_enemyMovementLocked)
+		if (!_enemy.CanMove)
 		{
 			return;
 		}
@@ -140,22 +134,18 @@ public class GameController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			_enemy.Up();
-			StartCoroutine(LockEnemyMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.LeftArrow))
 		{
 			_enemy.Left();
-			StartCoroutine(LockEnemyMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.DownArrow))
 		{
 			_enemy.Down();
-			StartCoroutine(LockEnemyMovement());
 		}
 		if (Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			_enemy.Right();
-			StartCoroutine(LockEnemyMovement());
 		}
 	}
 	
@@ -189,19 +179,5 @@ public class GameController : MonoBehaviour
 		{
 			OnPaperClicked(true);
 		}
-	}
-
-	private IEnumerator LockPlayerMovement()
-	{
-		_playerMovementLocked = true;
-		yield return new WaitForSeconds(1.0f);
-		_playerMovementLocked = false;
-	}
-	
-	private IEnumerator LockEnemyMovement()
-	{
-		_enemyMovementLocked = true;
-		yield return new WaitForSeconds(1.0f);
-		_enemyMovementLocked = false;
 	}
 }
