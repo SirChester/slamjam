@@ -152,6 +152,11 @@ public class Character : MonoBehaviour
 		}
 	}
 	
+	private void Update()
+	{
+		GetComponent<SpriteRenderer>().enabled = !HasInvulnerability || Time.realtimeSinceStartup % 0.32 < 0.16;
+	}
+	
 	private void InitializePosition()
 	{
 		gameObject.transform.localPosition = new Vector3(_initialPos.x, _initialPos.y, 0.0f);
