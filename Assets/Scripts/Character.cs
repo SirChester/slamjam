@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+	
+	
 	[SerializeField] private float _movementCooldown;
 	[SerializeField] private float _invulnerabilityCooldown = 0.3f;
 	[SerializeField] private Weapon[] _weapons;
@@ -15,6 +17,9 @@ public class Character : MonoBehaviour
 	public Action OnHpChanged;
 
 	public Vector2 PositionOnBoard;
+
+	private float _jumpAnimationTime = 0.24f;
+	
 	private int HorLimit = 2;
 	private int VertLimit = 4;
 	private Dictionary<Weapon.Type, float> _lastShots = new Dictionary<Weapon.Type, float>();
@@ -59,6 +64,24 @@ public class Character : MonoBehaviour
 		InitializePosition();
 		Hp = 100;
 	}
+	
+	private IEnumerator PlayAnimation(int animationId)
+	{
+		var animator = GetComponent<Animator>();
+		animator.SetInteger("state", 1);
+		float animationTime;
+		if (animationId == 1)
+		{
+			animationTime = _jumpAnimationTime;
+		}
+		else
+		{
+			animationTime = 0;
+		}
+		yield return new WaitForSeconds(animationTime);
+
+		animator.SetInteger("state", 0);
+	}
 
 	public void Up()
 	{
@@ -68,6 +91,8 @@ public class Character : MonoBehaviour
 			var pos = gameObject.transform.localPosition;
 			pos.y += _step;
 			gameObject.transform.localPosition= pos;
+
+			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
 	}
@@ -80,6 +105,7 @@ public class Character : MonoBehaviour
 			var pos = gameObject.transform.localPosition;
 			pos.y -= _step;
 			gameObject.transform.localPosition= pos;
+			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
 	}
@@ -92,6 +118,7 @@ public class Character : MonoBehaviour
 			var pos = gameObject.transform.localPosition;
 			pos.x -= _step;
 			gameObject.transform.localPosition= pos;
+			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
 	}
@@ -104,6 +131,7 @@ public class Character : MonoBehaviour
 			var pos = gameObject.transform.localPosition;
 			pos.x += _step;
 			gameObject.transform.localPosition= pos;
+			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
 	}
