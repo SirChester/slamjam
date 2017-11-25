@@ -168,6 +168,7 @@ public class Character : MonoBehaviour
 		obj.transform.position = _bulletPlace.position;
 		var weapon = obj.GetComponent<Weapon>();
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
+		StartCoroutine(PlayAnimation(2));
 	}
 	
 	public void StartShootWithCharge()
@@ -199,6 +200,7 @@ public class Character : MonoBehaviour
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
 		_movementLocked = false;
 		_chargeTime = _chargeDefaultTime;
+		StartCoroutine(PlayAnimation(2));
 	}
 	
 	public void MakeDamage(int damage)
