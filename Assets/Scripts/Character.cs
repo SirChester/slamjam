@@ -33,7 +33,6 @@ public class Character : MonoBehaviour
 	private Dictionary<Weapon.Type, float> _lastShots = new Dictionary<Weapon.Type, float>();
 
 	private int _hp;
-	private int _chargeIndex;
 	private bool _movementLocked;
 	private float _chargeTime;
 	private Coroutine _movementCoroutine;
@@ -69,26 +68,7 @@ public class Character : MonoBehaviour
 		get { return _chargeTime; }
 	}
 
-	public int ChargeIndex
-	{
-		get { return _chargeIndex; }
-		private set
-		{
-			if (value == 2)
-			{
-				_chargeParticle.SetActive(true);
-			}
-			else if (value == 1)
-			{
-				_halfChargeParticle.SetActive(true);
-			}
-			else
-			{
-				_chargeParticle.SetActive(false);
-				_halfChargeParticle.SetActive(false);
-			}
-		}
-	}
+	public int ChargeIndex { get; private set; }
 
 	public bool HasInvulnerability { get; set; }
 //	public float HasInvulnerability { get; private set; }
@@ -242,10 +222,28 @@ public class Character : MonoBehaviour
 	{
 		_movementLocked = false;
 		_chargeTime = _chargeDefaultTime;
-		ChargeIndex = 0;
+		SetCharge(0);
 		if (_chargeCoroutine != null)
 		{
 			StopCoroutine(_chargeCoroutine);
+		}
+	}
+
+	private void SetCharge(int value)
+	{
+		ChargeIndex = value;
+		if (value == 2)
+		{
+			_chargeParticle.SetActive(true);
+		}
+		else if (value == 1)
+		{
+			_halfChargeParticle.SetActive(true);
+		}
+		else
+		{
+			_chargeParticle.SetActive(false);
+			_halfChargeParticle.SetActive(false);
 		}
 	}
 
@@ -257,10 +255,10 @@ public class Character : MonoBehaviour
 			_chargeTime -= Time.deltaTime;
 			if (_chargeTime < _chargeDefaultTime / 2)
 			{
-				ChargeIndex = 1;
+				SetCharge(1);
 			}
 		}
-		ChargeIndex = 2;
+		SetCharge(2);
 	}
 	
 	public void MakeDamage(int damage)
