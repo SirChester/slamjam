@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
 	private Dictionary<Weapon.Type, float> _lastShots = new Dictionary<Weapon.Type, float>();
 
 	private int _hp;
+	private bool _movementLocked;
 
 	public int Hp
 	{
@@ -33,7 +34,12 @@ public class Character : MonoBehaviour
 		}
 	}
 
-	public bool CanMove { get; private set; }
+	public bool CanMove 
+	{
+		get { return !_movementLocked; }
+		private set { _movementLocked = value; }
+	}
+
 	public bool HasInvulnerability { get; private set; }
 
 	private void Awake()
@@ -57,7 +63,7 @@ public class Character : MonoBehaviour
 		{
 			PositionOnBoard.y--;
 			var pos = gameObject.transform.localPosition;
-			pos.y -= _step;
+			pos.y += _step;
 			gameObject.transform.localPosition= pos;
 			StartCoroutine(LockMovement());
 		}
@@ -69,7 +75,7 @@ public class Character : MonoBehaviour
 		{
 			PositionOnBoard.y++;
 			var pos = gameObject.transform.localPosition;
-			pos.y += _step;
+			pos.y -= _step;
 			gameObject.transform.localPosition= pos;
 			StartCoroutine(LockMovement());
 		}
@@ -93,7 +99,7 @@ public class Character : MonoBehaviour
 		{
 			PositionOnBoard.x++;
 			var pos = gameObject.transform.localPosition;
-			pos.y += _step;
+			pos.x += _step;
 			gameObject.transform.localPosition= pos;
 			StartCoroutine(LockMovement());
 		}
@@ -123,9 +129,9 @@ public class Character : MonoBehaviour
 
 	private IEnumerator LockMovement()
 	{
-		CanMove = false;
+		_movementLocked = true;
 		yield return new WaitForSeconds(_movementCooldown);
-		CanMove = true;
+		_movementLocked = false;
 	}
 
 	public bool CanShootByIndex(int idx)
