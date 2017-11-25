@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
 	[SerializeField] private RectTransform _enemyPlace;
 	[SerializeField] private Player _player;
 	[SerializeField] private Enemy _enemy;
+	[SerializeField] private Floor _playerFloor;
+	[SerializeField] private Floor _enemyFloor;
 
 	private void Awake()
 	{
