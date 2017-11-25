@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
 	[SerializeField] private GameObject _roundScreen;
 	[SerializeField] private Text _resultsLbl;
 	[SerializeField] private Text _roundLbl;
+	
+	[SerializeField] private Text _animatioText;
 
 	private bool _gameStarted;
 	
@@ -142,11 +144,15 @@ public class GameController : MonoBehaviour
 		_playerCharge.value = _player.ChargeTime;
 		_enemyCharge.value = _enemy.ChargeTime;
 		
+		
+		
 		UpdatePlayerMovement();
 		UpdatePlayerShooting();
 		UpdateEnemyMovement();
 		UpdateEnemyShooting();
 		UpdateFloors();
+
+//		_animatioText.text = "Animation state:" + _player.AmimationStatus;
 	}
 	
 	private void UpdatePlayerMovement()

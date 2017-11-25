@@ -16,6 +16,8 @@ public class Character : MonoBehaviour
 	[SerializeField] private float _chargeDefaultTime;
 	[SerializeField] private int _maxHp;
 
+	public int AmimationStatus = 0;
+
 	public Action OnHpChanged;
 
 	public Vector2 PositionOnBoard;
@@ -93,7 +95,8 @@ public class Character : MonoBehaviour
 	private IEnumerator PlayAnimation(int animationId)
 	{
 		var animator = GetComponent<Animator>();
-		animator.SetInteger("State", 1);
+		animator.SetInteger("State", animationId);
+		AmimationStatus = animationId;
 		float animationTime;
 		if (animationId == 1)
 		{
@@ -109,6 +112,7 @@ public class Character : MonoBehaviour
 		yield return new WaitForSeconds(animationTime);
 
 		animator.SetInteger("State", 0);
+		AmimationStatus = 0;
 	}
 	
 	private IEnumerator SmoothChangePosition(Vector3 newPos)
