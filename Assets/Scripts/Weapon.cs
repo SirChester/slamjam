@@ -41,9 +41,9 @@ public class Weapon : MonoBehaviour
 		if (collideBullet != null)
 		{
 			var needDestroy = _type == collideBullet.BulletType;
-			needDestroy |= _type == Type.Paper && collideBullet.BulletType == Type.Scissors;
-			needDestroy |= _type == Type.Scissors && collideBullet.BulletType == Type.Rock;
-			needDestroy |= _type == Type.Rock && collideBullet.BulletType == Type.Paper;
+			needDestroy |= collideBullet.BulletType == Type.Rock;
+			needDestroy |= _type == Type.Scissors; //&& collideBullet.BulletType == Type.Rock;
+//			needDestroy |= _type == Type.Rock && collideBullet.BulletType == Type.Paper;
 			if (needDestroy)
 			{
 				Destroy(gameObject);
