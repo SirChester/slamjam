@@ -115,12 +115,16 @@ public class GameController : MonoBehaviour
 		_roundCount = 0;
 		_gameStarted = false;
 		_resultsScreen.SetActive(true);
+		_player.HasInvulnerability = true;
+		_enemy.HasInvulnerability = true;
 		_resultsLbl.text = _playerScore == 3 ? "PALADIN WINS" : "BEAR WINS";
 		yield return new WaitForSeconds(4.0f);
 		EnemyScore = 0;
 		PlayerScore = 0;
 		_resultsScreen.SetActive(false);
 		_startGameScreen.SetActive(true);
+		_player.HasInvulnerability = false;
+		_enemy.HasInvulnerability = false;
 		_gameStarted = false;
 	}
 

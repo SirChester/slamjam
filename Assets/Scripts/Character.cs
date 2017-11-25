@@ -46,7 +46,7 @@ public class Character : MonoBehaviour
 		private set { _movementLocked = value; }
 	}
 
-	public bool HasInvulnerability { get; private set; }
+	public bool HasInvulnerability { get; set; }
 //	public float HasInvulnerability { get; private set; }
 
 	private void Awake()
