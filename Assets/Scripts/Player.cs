@@ -14,27 +14,9 @@ public class Player : Character
 		base.SetPosition();
 	}
 
-	public override void ShootRock()
+	protected override void FixBulletPosition(GameObject bullet)
 	{
-		var obj = Instantiate(Resources.Load("Prefabs/Rock")) as GameObject;
-		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f,
+		bullet.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f,
 			gameObject.transform.localPosition.y - 12.5f);
-		obj.GetComponent<Bullet>().PushTo(true);
-	}
-
-	public override void ShootScissor()
-	{
-		var obj = Instantiate(Resources.Load("Prefabs/Scissor")) as GameObject;
-		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f,
-			gameObject.transform.localPosition.y - 12.5f);
-		obj.GetComponent<Bullet>().PushTo(true);
-	}
-
-	public override void ShootPaper()
-	{
-		var obj = Instantiate(Resources.Load("Prefabs/Paper")) as GameObject;
-		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 75.0f,
-			gameObject.transform.localPosition.y - 12.5f);
-		obj.GetComponent<Bullet>().PushTo(true);
 	}
 }

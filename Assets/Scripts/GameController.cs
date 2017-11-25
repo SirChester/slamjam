@@ -59,11 +59,17 @@ public class GameController : MonoBehaviour
 	{
 		if (enemy)
 		{
-			_enemy.ShootRock();
+			if (_enemy.CanShootByIndex(0))
+			{
+				_enemy.ShootByIndex(0);
+			}
 		}
 		else
 		{
-			_player.ShootRock();
+			if (_player.CanShootByIndex(0))
+			{
+				_player.ShootByIndex(0);
+			}
 		}
 	}
 
@@ -71,11 +77,17 @@ public class GameController : MonoBehaviour
 	{
 		if (enemy)
 		{
-			_enemy.ShootScissor();
+			if (_enemy.CanShootByIndex(1))
+			{
+				_enemy.ShootByIndex(1);
+			}
 		}
 		else
 		{
-			_player.ShootScissor();
+			if (_player.CanShootByIndex(1))
+			{
+				_player.ShootByIndex(1);
+			}
 		}
 	}
 
@@ -83,11 +95,17 @@ public class GameController : MonoBehaviour
 	{
 		if (enemy)
 		{
-			_enemy.ShootPaper();
+			if (_enemy.CanShootByIndex(2))
+			{
+				_enemy.ShootByIndex(2);
+			}
 		}
 		else
 		{
-			_player.ShootPaper();
+			if (_player.CanShootByIndex(2))
+			{
+				_player.ShootByIndex(2);
+			}
 		}
 	}
 
