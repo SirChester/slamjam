@@ -16,7 +16,7 @@ public class Enemy : Character
 
 	public override void ShootRock()
 	{
-		var obj = Instantiate(Resources.Load("Prefabs/Rock"), gameObject.transform.parent) as GameObject;
+		var obj = Instantiate(Resources.Load("Prefabs/Rock")) as GameObject;
 		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f,
 			gameObject.transform.localPosition.y - 12.5f);
 		obj.GetComponent<Bullet>().PushTo(false);
@@ -24,7 +24,7 @@ public class Enemy : Character
 
 	public override void ShootScissor()
 	{
-		var obj = Instantiate(Resources.Load("Prefabs/Scissor"), gameObject.transform.parent) as GameObject;
+		var obj = Instantiate(Resources.Load("Prefabs/Scissor")) as GameObject;
 		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f,
 			gameObject.transform.localPosition.y - 12.5f);
 		obj.GetComponent<Bullet>().PushTo(false);
@@ -32,7 +32,7 @@ public class Enemy : Character
 
 	public override void ShootPaper()
 	{
-		var obj = Instantiate(Resources.Load("Prefabs/Paper"), gameObject.transform.parent) as GameObject;
+		var obj = Instantiate(Resources.Load("Prefabs/Paper")) as GameObject;
 		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f,
 			gameObject.transform.localPosition.y - 12.5f);
 		obj.GetComponent<Bullet>().PushTo(false);
