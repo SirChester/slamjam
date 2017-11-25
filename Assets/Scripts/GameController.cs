@@ -258,7 +258,7 @@ public class GameController : MonoBehaviour
 	
 	private void UpdatePlayerShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKeyDown(KeyCode.F) && _player.CanMove)
 		{
 			OnRockClicked(false);
 		}
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour
 	
 	private void UpdateEnemyShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.I))
+		if (Input.GetKeyDown(KeyCode.I) && _enemy.CanMove)
 		{
 			OnRockClicked(true);
 		}
