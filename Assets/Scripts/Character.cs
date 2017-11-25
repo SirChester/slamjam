@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
 
 	public Vector2 PositionOnBoard;
 
-	private float _jumpAnimationTime = 0.24f;
+	private float _jumpAnimationTime = 0.5f;
 	
 	private int HorLimit = 2;
 	private int VertLimit = 4;
@@ -68,7 +68,7 @@ public class Character : MonoBehaviour
 	private IEnumerator PlayAnimation(int animationId)
 	{
 		var animator = GetComponent<Animator>();
-		animator.SetInteger("state", 1);
+		animator.SetInteger("State", 1);
 		float animationTime;
 		if (animationId == 1)
 		{
@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
 		}
 		yield return new WaitForSeconds(animationTime);
 
-		animator.SetInteger("state", 0);
+		animator.SetInteger("State", 0);
 	}
 
 	public void Up()
