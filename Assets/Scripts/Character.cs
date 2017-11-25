@@ -29,6 +29,7 @@ public class Character : MonoBehaviour
 	private int _hp;
 	private bool _movementLocked;
 	private float _chargeTime;
+	private Coroutine _movementCoroutine;
 	private Coroutine _chargeCoroutine;
 
 	public int Hp
@@ -75,6 +76,11 @@ public class Character : MonoBehaviour
 	
 	public void ResetChar()
 	{
+		if (_movementCoroutine != null)
+		{
+			StopCoroutine(_movementCoroutine);
+			_movementCoroutine = null;
+		}
 		PositionOnBoard = new Vector2(1, 2);
 		InitializePosition();
 		Hp = _maxHp;
@@ -98,16 +104,33 @@ public class Character : MonoBehaviour
 
 		animator.SetInteger("State", 0);
 	}
-
+	
+	private IEnumerator SmoothChangePosition(Vector3 newPos)
+	{
+		var time = 0.0f;
+		var tempPos = gameObject.transform.localPosition;
+		while (time < _movementCooldown)
+		{
+			yield return null;
+			var pos = gameObject.transform.localPosition;
+			pos.x += (newPos.x - tempPos.x) * (time / _movementCooldown);
+			pos.y += (newPos.y - tempPos.y) * (time / _movementCooldown);
+			gameObject.transform.localPosition = pos;
+			tempPos = gameObject.transform.localPosition;
+			time += Time.deltaTime;
+		}
+		gameObject.transform.localPosition = newPos;
+		_movementCoroutine = null;
+	}
+	
 	public void Up()
 	{
-		if (PositionOnBoard.y > 0)
+		if (PositionOnBoard.y > 0 && _movementCoroutine == null)
 		{
 			PositionOnBoard.y--;
 			var pos = gameObject.transform.localPosition;
 			pos.y += _step;
-			gameObject.transform.localPosition= pos;
-
+			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
 			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
@@ -115,12 +138,12 @@ public class Character : MonoBehaviour
 
 	public void Down()
 	{
-		if (PositionOnBoard.y < VertLimit)
+		if (PositionOnBoard.y < VertLimit && _movementCoroutine == null)
 		{
 			PositionOnBoard.y++;
 			var pos = gameObject.transform.localPosition;
 			pos.y -= _step;
-			gameObject.transform.localPosition= pos;
+			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
 			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
@@ -128,12 +151,12 @@ public class Character : MonoBehaviour
 
 	public void Left()
 	{
-		if (PositionOnBoard.x > 0)
+		if (PositionOnBoard.x > 0 && _movementCoroutine == null)
 		{
 			PositionOnBoard.x--;
 			var pos = gameObject.transform.localPosition;
 			pos.x -= _step;
-			gameObject.transform.localPosition= pos;
+			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
 			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
@@ -141,12 +164,12 @@ public class Character : MonoBehaviour
 
 	public void Right()
 	{
-		if (PositionOnBoard.x < HorLimit)
+		if (PositionOnBoard.x < HorLimit && _movementCoroutine == null)
 		{
 			PositionOnBoard.x++;
 			var pos = gameObject.transform.localPosition;
 			pos.x += _step;
-			gameObject.transform.localPosition= pos;
+			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
 			StartCoroutine(PlayAnimation(1));
 			StartCoroutine(LockMovement());
 		}
