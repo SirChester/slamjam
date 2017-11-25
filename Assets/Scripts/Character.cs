@@ -21,6 +21,7 @@ public class Character : MonoBehaviour
 	public Vector2 PositionOnBoard;
 
 	private float _jumpAnimationTime = 0.5f;
+	private float _attackAnimationTime = 0.7f;
 	
 	private int HorLimit = 2;
 	private int VertLimit = 4;
@@ -95,6 +96,9 @@ public class Character : MonoBehaviour
 		if (animationId == 1)
 		{
 			animationTime = _jumpAnimationTime;
+		} else if (animationId == 2)
+		{
+			animationTime = _attackAnimationTime;
 		}
 		else
 		{
