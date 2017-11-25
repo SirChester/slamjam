@@ -32,24 +32,33 @@ public class Bullet : MonoBehaviour
 		_rb.AddForce(_direction * _forceMultiplier);
 	}
 
-	void OnCollisionEnter2D(Collision2D coll)
+	private void OnCollisionEnter2D(Collision2D coll)
 	{
 		var collideBullet = coll.gameObject.GetComponent<Bullet>();
-		
-		var needDestroy = coll.gameObject.CompareTag("Enemy");
-		needDestroy |=  coll.gameObject.CompareTag("Player");
 		if (collideBullet != null)
 		{
+			var needDestroy = _type == collideBullet.BulletType;
 			needDestroy |= _type == Type.Paper && collideBullet.BulletType == Type.Scissors;
 			needDestroy |= _type == Type.Scissors && collideBullet.BulletType == Type.Rock;
 			needDestroy |= _type == Type.Rock && collideBullet.BulletType == Type.Paper;
-			needDestroy |= _type == collideBullet.BulletType;
+			if (needDestroy)
+			{
+				Destroy(gameObject);
+				coll.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * -_forceMultiplier);
+				return;
+			}
 		}
-		if (needDestroy)
+
+		if (coll.gameObject.CompareTag("Enemy"))
 		{
+			coll.gameObject.GetComponent<Enemy>().Hp -= 10;
 			Destroy(gameObject);
 		}
-		coll.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * -_forceMultiplier);
-//			coll.gameObject.SendMessage("ApplyDamage", 10);
+		
+		if (coll.gameObject.CompareTag("Player"))
+		{
+			coll.gameObject.GetComponent<Player>().Hp -= 10;
+			Destroy(gameObject);
+		}
 	}
 }

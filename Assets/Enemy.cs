@@ -1,14 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 	public Action OnHpChanged;
 	
 	private Vector2 _positionOnBoard;
 	private int HorLimit = 2;
 	private int VertLimit = 4;
-	
+
 	private int _hp;
 
 	public int Hp
@@ -26,10 +26,11 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		_positionOnBoard = Vector2.zero;
+		_positionOnBoard = new Vector2(2, 0);
 		Hp = 100;
 		SetPosition();
 	}
+	
 
 	private void SetPosition()
 	{
@@ -72,11 +73,11 @@ public class Player : MonoBehaviour
 		}
 		SetPosition();
 	}
-	
+
 	public void ShootRock()
 	{
 		var obj = Instantiate(Resources.Load("Prefabs/Rock"), gameObject.transform.parent) as GameObject;
-		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x + 55.0f, gameObject.transform.localPosition.y - 12.5f);
-		obj.GetComponent<Bullet>().PushTo(true);
+		obj.transform.localPosition = new Vector2(gameObject.transform.localPosition.x - 55.0f, gameObject.transform.localPosition.y - 12.5f);
+		obj.GetComponent<Bullet>().PushTo(false);
 	}
 }
