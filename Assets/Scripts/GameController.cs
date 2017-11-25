@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -39,11 +38,18 @@ public class GameController : MonoBehaviour
 		{
 			_playerScore++;
 			_playerScoreLbl.text = _playerScore.ToString();
-			_enemy.ResetChar();
-			_player.ResetChar();
+			ResetMatch();
 		}
 	}
-	
+
+	private void ResetMatch()
+	{
+		_enemy.ResetChar();
+		_player.ResetChar();
+		_playerFloor.Reset();
+		_playerFloor.Reset();
+	}
+
 	private void PlayerHpDidChange()
 	{
 		_playerHealth.value = _player.Hp;
@@ -51,8 +57,7 @@ public class GameController : MonoBehaviour
 		{
 			_enemyScore++;
 			_enemyScoreLbl.text = _enemyScore.ToString();
-			_enemy.ResetChar();
-			_player.ResetChar();
+			ResetMatch();
 		}
 	}
 
@@ -203,11 +208,13 @@ public class GameController : MonoBehaviour
 	
 	private void UpdateFloors()
 	{
-		if (_playerFloor.damageByPlayer(_player.PositionOnBoard))
+		var needToDamagePlayer = _playerFloor.damageByPlayer(_player.PositionOnBoard);
+		if (needToDamagePlayer)
 		{
 			_player.MakeDamage(_damageByFloor);
 		}
-		if (_enemyFloor.damageByPlayer(_enemy.PositionOnBoard))
+		var needToDamageEnemy = _enemyFloor.damageByPlayer(_enemy.PositionOnBoard);
+		if (needToDamageEnemy)
 		{
 			_enemy.MakeDamage(_damageByFloor);
 		}

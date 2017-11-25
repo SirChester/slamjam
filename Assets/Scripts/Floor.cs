@@ -17,11 +17,9 @@ public class Floor : MonoBehaviour
         {
             var spriteRenderer = floorCell._gameObject.GetComponent<SpriteRenderer>();
             var cell = new FloorCell(spriteRenderer, _cellHealth);
-            var x = (int) floorCell._coordinates.x;
-            var y = (int) floorCell._coordinates.y;
-            
+            var x = (int) floorCell._coordinates.y;
+            var y = (int) floorCell._coordinates.x;
             _cells[x, y] = cell;
-            
         }
 
         _sprites = Resources.LoadAll<Sprite>("Sprites/grassland_spritesheet");
@@ -68,5 +66,10 @@ public class Floor : MonoBehaviour
             SpriteRenderer.sprite = newSprite;
             return Health <= 0;
         }
+    }
+
+    public void Reset()
+    {
+        
     }
 }

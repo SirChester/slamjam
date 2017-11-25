@@ -42,6 +42,7 @@ public class Character : MonoBehaviour
 	}
 
 	public bool HasInvulnerability { get; private set; }
+//	public float HasInvulnerability { get; private set; }
 
 	private void Awake()
 	{
@@ -119,10 +120,19 @@ public class Character : MonoBehaviour
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
 	}
 	
-	public IEnumerator MakeDamage(int damage)
+	public void MakeDamage(int damage)
 	{
-		if (HasInvulnerability) yield break;
+		if (HasInvulnerability)
+		{
+			return;
+		}
+		
 		Hp -= damage;
+		StartCoroutine(ApplyInvul());
+	}
+
+	private IEnumerator ApplyInvul()
+	{
 		HasInvulnerability = true;
 		yield return new WaitForSeconds(_invulnerabilityCooldown);
 		HasInvulnerability = false;
