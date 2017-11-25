@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
 	[SerializeField] private Weapon[] _weapons;
 	[SerializeField] private Vector2 _initialPos;
 	[SerializeField] private float _step;
+	[SerializeField] private Transform _bulletPlace;
 
 	public Action OnHpChanged;
 
@@ -112,8 +113,8 @@ public class Character : MonoBehaviour
 	
 	public void ShootByIndex(int idx)
 	{
-		var obj = Weapon.ShootByType(_weapons[idx].BulletType);
-		FixBulletPosition(obj);
+		var obj = Weapon.ShootByType(_weapons[idx].BulletType, gameObject.name);
+		obj.transform.position = _bulletPlace.position;
 		var weapon = obj.GetComponent<Weapon>();
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
 	}

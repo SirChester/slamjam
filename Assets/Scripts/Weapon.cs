@@ -24,19 +24,9 @@ public class Weapon : MonoBehaviour
 		get { return _cooldown; }
 	}
 
-	public static GameObject ShootByType(Type type)
+	public static GameObject ShootByType(Type type, string playerName)
 	{
-		var path = "Prefabs/Rock";
-		switch (type)
-		{
-			case Type.Paper:
-				path = "Prefabs/Paper";
-				break;
-			case Type.Scissors:
-				path = "Prefabs/Scissor";
-				break;
-		}
-		return Instantiate(Resources.Load(path)) as GameObject;
+		return Instantiate(Resources.Load("Prefabs/" + playerName + "_" + type)) as GameObject;
 	}
 	
 	private void Awake()
