@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 public class Floor : MonoBehaviour
 {
-    [SerializeField] private int _cellHealth;
-    [SerializeField] private int _playerTickDamage;
+    [SerializeField] private double _cellHealth = 100;
+    [SerializeField] private double _playerTickDamage = 0.1;
     
     private FloorCell[,] _cells = new FloorCell[3, 5];
+    private static Sprite[] _sprites;
 
     private void Awake()
     {
@@ -26,6 +27,8 @@ public class Floor : MonoBehaviour
             var cell = new FloorCell(spriteRenderer, _cellHealth);
             _cells[x, y] = cell;
         }
+
+        _sprites = Resources.LoadAll<Sprite>("Sprites/grassland_spritesheet");
     }
 
     public void damageByPlayer(Vector2 position)
@@ -70,19 +73,29 @@ public class Floor : MonoBehaviour
 
     private class FloorCell
     {
+        private int _cellDamageFramesCount = 6;
+        
         public SpriteRenderer SpriteRenderer { get; private set; }
-        public int Health { get; private set; }
+        public double Health { get; private set; }
+        public double MaxHealth { get; private set; }
 
-        public FloorCell(SpriteRenderer spriteRenderer, int cellHealth)
+        public FloorCell(SpriteRenderer spriteRenderer, double cellHealth)
         {
             SpriteRenderer = spriteRenderer;
             Health = cellHealth;
+            MaxHealth = cellHealth;
         }
 
-        public void Damage(int damage)
+        public void Damage(double damage)
         {
             Health -= damage;
-//            SpriteRenderer.sprite
+            int frameNum = (int) ((MaxHealth - Health) * _cellDamageFramesCount / MaxHealth + 1);
+            frameNum = Math.Min(_cellDamageFramesCount, frameNum);
+            var currentSpriteName = SpriteRenderer.sprite.name;
+            var newSpriteName = currentSpriteName.Substring(0, currentSpriteName.Length - 1) + frameNum;
+            var newSprite = Array.FindAll(_sprites, obj => obj.name == newSpriteName)[0];
+
+            SpriteRenderer.sprite = newSprite;
         }
     }
 }
