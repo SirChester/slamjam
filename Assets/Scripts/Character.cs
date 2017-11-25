@@ -126,7 +126,14 @@ public class Character : MonoBehaviour
 		gameObject.transform.localPosition = newPos;
 		_movementCoroutine = null;
 	}
-	
+
+	private void ProcessMovement(Vector3 pos)
+	{
+		StartCoroutine(PlayAnimation(1));
+		_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
+		StartCoroutine(LockMovement());
+	}
+
 	public void Up()
 	{
 		if (PositionOnBoard.y > 0 && _movementCoroutine == null)
@@ -134,9 +141,7 @@ public class Character : MonoBehaviour
 			PositionOnBoard.y--;
 			var pos = gameObject.transform.localPosition;
 			pos.y += _step;
-			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
-			StartCoroutine(PlayAnimation(1));
-			StartCoroutine(LockMovement());
+			ProcessMovement(pos);
 		}
 	}
 
@@ -147,9 +152,7 @@ public class Character : MonoBehaviour
 			PositionOnBoard.y++;
 			var pos = gameObject.transform.localPosition;
 			pos.y -= _step;
-			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
-			StartCoroutine(PlayAnimation(1));
-			StartCoroutine(LockMovement());
+			ProcessMovement(pos);
 		}
 	}
 
@@ -160,9 +163,7 @@ public class Character : MonoBehaviour
 			PositionOnBoard.x--;
 			var pos = gameObject.transform.localPosition;
 			pos.x -= _step;
-			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
-			StartCoroutine(PlayAnimation(1));
-			StartCoroutine(LockMovement());
+			ProcessMovement(pos);
 		}
 	}
 
@@ -173,9 +174,7 @@ public class Character : MonoBehaviour
 			PositionOnBoard.x++;
 			var pos = gameObject.transform.localPosition;
 			pos.x += _step;
-			_movementCoroutine = StartCoroutine(SmoothChangePosition(pos));
-			StartCoroutine(PlayAnimation(1));
-			StartCoroutine(LockMovement());
+			ProcessMovement(pos);
 		}
 	}
 	
