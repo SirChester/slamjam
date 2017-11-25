@@ -21,14 +21,17 @@ public class GameController : MonoBehaviour
 
 	private bool _gameStarted;
 	
-	private int _playerScore = 0;
-	private int _enemyScore = 0;
-	private int _roundCount = 0;
+	private int _playerScore;
+	private int _enemyScore;
+	private int _roundCount;
 
 	private void Awake()
 	{
 		_player.OnHpChanged += PlayerHpDidChange;
 		_enemy.OnHpChanged += EnemyHpDidChange;
+
+		_playerHealth.maxValue = _player.MaxHp;
+		_enemyHealth.maxValue = _enemy.MaxHp;
 	}
 
 	private void OnDestroy()
@@ -105,7 +108,7 @@ public class GameController : MonoBehaviour
 		_gameStarted = false;
 		_roundScreen.SetActive(true);
 		_roundLbl.text = "ROUND " + _roundCount;
-		yield return new WaitForSeconds(4.0f);
+		yield return new WaitForSeconds(2.0f);
 		_roundScreen.SetActive(false);
 		_gameStarted = true;
 	}
@@ -118,7 +121,7 @@ public class GameController : MonoBehaviour
 		_player.HasInvulnerability = true;
 		_enemy.HasInvulnerability = true;
 		_resultsLbl.text = _playerScore == 3 ? "PALADIN WINS" : "BEAR WINS";
-		yield return new WaitForSeconds(4.0f);
+		yield return new WaitForSeconds(2.0f);
 		EnemyScore = 0;
 		PlayerScore = 0;
 		_resultsScreen.SetActive(false);
@@ -254,12 +257,16 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.G))
 		{
-			OnScissorClicked(false);
+			_player.StartShootByIndexWithCharge(1);
 		}
-		if (Input.GetKeyDown(KeyCode.H))
+		if (Input.GetKeyUp(KeyCode.G))
 		{
-			OnPaperClicked(false);
+			_player.StopShootByIndexWithCharge(1);
 		}
+//		if (Input.GetKeyDown(KeyCode.H))
+//		{
+//			OnPaperClicked(false);
+//		}
 	}
 	
 	private void UpdateEnemyShooting()
@@ -270,12 +277,16 @@ public class GameController : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.O))
 		{
-			OnScissorClicked(true);
+			_enemy.StartShootByIndexWithCharge(1);
 		}
-		if (Input.GetKeyDown(KeyCode.P))
+		if (Input.GetKeyUp(KeyCode.O))
 		{
-			OnPaperClicked(true);
+			_enemy.StopShootByIndexWithCharge(1);
 		}
+//		if (Input.GetKeyDown(KeyCode.P))
+//		{
+//			OnPaperClicked(true);
+//		}
 	}
 	
 	private void UpdateFloors()

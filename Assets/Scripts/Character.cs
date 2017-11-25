@@ -13,6 +13,8 @@ public class Character : MonoBehaviour
 	[SerializeField] private Vector2 _initialPos;
 	[SerializeField] private float _step;
 	[SerializeField] private Transform _bulletPlace;
+	[SerializeField] private float _chargeDefaultTime;
+	[SerializeField] private int _maxHp;
 
 	public Action OnHpChanged;
 
@@ -26,6 +28,7 @@ public class Character : MonoBehaviour
 
 	private int _hp;
 	private bool _movementLocked;
+	private float _chargeTime;
 
 	public int Hp
 	{
@@ -40,10 +43,21 @@ public class Character : MonoBehaviour
 		}
 	}
 
+	public int MaxHp
+	{
+		get { return _maxHp; }
+		set { _maxHp = value; }
+	}
+
 	public bool CanMove 
 	{
 		get { return !_movementLocked; }
 		private set { _movementLocked = value; }
+	}
+	
+	public bool CanSpellUltimateAbility()
+	{
+		return _chargeTime < 0;
 	}
 
 	public bool HasInvulnerability { get; set; }
@@ -51,18 +65,19 @@ public class Character : MonoBehaviour
 
 	private void Awake()
 	{
-		for (int i = 0; i < _weapons.Length; ++i)
+		for (var i = 0; i < _weapons.Length; ++i)
 		{
 			_lastShots.Add(_weapons[i].BulletType, 0.0f);
 		}
 		ResetChar();
 	}
-
+	
 	public void ResetChar()
 	{
 		PositionOnBoard = new Vector2(1, 2);
 		InitializePosition();
-		Hp = 100;
+		Hp = _maxHp;
+		_chargeTime = _chargeDefaultTime;
 	}
 	
 	private IEnumerator PlayAnimation(int animationId)
@@ -147,6 +162,34 @@ public class Character : MonoBehaviour
 		obj.transform.position = _bulletPlace.position;
 		var weapon = obj.GetComponent<Weapon>();
 		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
+	}
+	
+	public void StartShootByIndexWithCharge(int idx)
+	{
+		_movementLocked = true;
+		StartCoroutine(ShootByIndexWithCharge(idx));
+	}
+	
+	public void StopShootByIndexWithCharge(int idx)
+	{
+		_movementLocked = false;
+		_chargeTime = _chargeDefaultTime;
+		StopCoroutine(ShootByIndexWithCharge(idx));
+	}
+
+	private IEnumerator ShootByIndexWithCharge(int idx)
+	{
+		while (_chargeTime > 0)
+		{
+			yield return null;
+			_chargeTime -= Time.deltaTime;
+		}
+		var obj = Weapon.ShootByType(_weapons[idx].BulletType, gameObject.name);
+		obj.transform.position = _bulletPlace.position;
+		var weapon = obj.GetComponent<Weapon>();
+		_lastShots[weapon.BulletType] = Time.realtimeSinceStartup;
+		_movementLocked = false;
+		_chargeTime = _chargeDefaultTime;
 	}
 	
 	public void MakeDamage(int damage)
