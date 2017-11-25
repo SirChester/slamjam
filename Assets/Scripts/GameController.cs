@@ -154,7 +154,7 @@ public class GameController : MonoBehaviour
 	
 	private void UpdatePlayerMovement()
 	{
-		if (!_player.CanMove)
+		if (!_player.CanMove || Input.GetKey(KeyCode.Space))
 		{
 			return;
 		}
@@ -179,24 +179,24 @@ public class GameController : MonoBehaviour
 	
 	private void UpdateEnemyMovement()
 	{
-		if (!_enemy.CanMove)
+		if (!_enemy.CanMove || Input.GetKey(KeyCode.Return))
 		{
 			return;
 		}
 		
-		if (Input.GetKey(KeyCode.UpArrow))
+		if (Input.GetKey(KeyCode.I))
 		{
 			_enemy.Up();
 		}
-		if (Input.GetKey(KeyCode.LeftArrow))
+		if (Input.GetKey(KeyCode.J))
 		{
 			_enemy.Left();
 		}
-		if (Input.GetKey(KeyCode.DownArrow))
+		if (Input.GetKey(KeyCode.K))
 		{
 			_enemy.Down();
 		}
-		if (Input.GetKey(KeyCode.RightArrow))
+		if (Input.GetKey(KeyCode.L))
 		{
 			_enemy.Right();
 		}
@@ -204,11 +204,11 @@ public class GameController : MonoBehaviour
 	
 	private void UpdatePlayerShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.LeftShift))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			_player.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.LeftShift))
+		if (Input.GetKeyUp(KeyCode.Space))
 		{
 			if (_player.ChargeAvailable)
 			{
@@ -227,11 +227,11 @@ public class GameController : MonoBehaviour
 	
 	private void UpdateEnemyShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.B))
+		if (Input.GetKeyDown(KeyCode.Return))
 		{
 			_enemy.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.B))
+		if (Input.GetKeyUp(KeyCode.Return))
 		{
 			if (_enemy.ChargeAvailable)
 			{
