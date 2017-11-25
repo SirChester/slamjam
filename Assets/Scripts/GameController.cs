@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -12,12 +13,17 @@ public class GameController : MonoBehaviour
 	[SerializeField] private Text _playerScoreLbl;
 	[SerializeField] private Text _enemyScoreLbl;
 	[SerializeField] private int _damageByFloor;
+	[SerializeField] private GameObject _startGameScreen;
+	[SerializeField] private GameObject _resultsScreen;
+	[SerializeField] private GameObject _roundScreen;
+	[SerializeField] private Text _resultsLbl;
+	[SerializeField] private Text _roundLbl;
 
-	private bool _playerMovementLocked;
-	private bool _enemyMovementLocked;
-
+	private bool _gameStarted;
+	
 	private int _playerScore = 0;
 	private int _enemyScore = 0;
+	private int _roundCount = 0;
 
 	private void Awake()
 	{
@@ -41,15 +47,7 @@ public class GameController : MonoBehaviour
 			ResetMatch();
 		}
 	}
-
-	private void ResetMatch()
-	{
-		_enemy.ResetChar();
-		_player.ResetChar();
-		_playerFloor.Reset();
-		_enemyFloor.Reset();
-	}
-
+	
 	private void PlayerHpDidChange()
 	{
 		_playerHealth.value = _player.Hp;
@@ -59,6 +57,51 @@ public class GameController : MonoBehaviour
 			_enemyScoreLbl.text = _enemyScore.ToString();
 			ResetMatch();
 		}
+	}
+
+	private void ResetMatch()
+	{
+		_enemy.ResetChar();
+		_player.ResetChar();
+		_playerFloor.Reset();
+		_enemyFloor.Reset();
+		if (_playerScore == 3 || _enemyScore == 3)
+		{
+			StartCoroutine(GameOver());
+		}
+		else
+		{
+			StartCoroutine(ChangeRound());
+		}
+	}
+
+	public void StartGame()
+	{
+		_startGameScreen.SetActive(false);
+		StartCoroutine(ChangeRound());
+	}
+
+	private IEnumerator ChangeRound()
+	{
+		_roundCount++;
+		_gameStarted = false;
+		_roundScreen.SetActive(true);
+		_roundLbl.text = "ROUND " + _roundCount;
+		yield return new WaitForSeconds(4.0f);
+		_roundScreen.SetActive(false);
+		_gameStarted = true;
+	}
+
+	private IEnumerator GameOver()
+	{
+		_roundCount = 0;
+		_gameStarted = false;
+		_resultsScreen.SetActive(true);
+		_resultsLbl.text = _playerScore == 3 ? "PALADIN WINS" : "BEAR WINS";
+		yield return new WaitForSeconds(4.0f);
+		_resultsScreen.SetActive(false);
+		_startGameScreen.SetActive(true);
+		_gameStarted = false;
 	}
 
 	public void OnRockClicked(bool enemy)
@@ -117,6 +160,11 @@ public class GameController : MonoBehaviour
 
 	private void Update()
 	{
+		if (!_gameStarted)
+		{
+			return;
+		}
+		
 		UpdatePlayerMovement();
 		UpdatePlayerShooting();
 		UpdateEnemyMovement();

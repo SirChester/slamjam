@@ -55,6 +55,7 @@ public class Character : MonoBehaviour
 
 	public void ResetChar()
 	{
+		PositionOnBoard = new Vector2(1, 2);
 		InitializePosition();
 		Hp = 100;
 	}
