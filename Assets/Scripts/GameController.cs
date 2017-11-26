@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
 	[SerializeField] private GameObject _roundScreen;
 	[SerializeField] private Text _resultsLbl;
 	[SerializeField] private Text _roundLbl;
+	[SerializeField] private LootGenerator _generator;
 	
 	[SerializeField] private Text _animatioText;
 
@@ -28,6 +29,16 @@ public class GameController : MonoBehaviour
 	private int _roundCount;
 
 	private float _changeRoundAnimationTime = 2.0f;
+
+	public bool GameStarted
+	{
+		get { return _gameStarted; }
+		set
+		{
+			_gameStarted = value; 
+			_generator.gameObject.SetActive(value);
+		}
+	}
 
 	private void Awake()
 	{
@@ -106,18 +117,18 @@ public class GameController : MonoBehaviour
 	private IEnumerator ChangeRound()
 	{
 		_roundCount++;
-		_gameStarted = false;
+		GameStarted = false;
 		_roundScreen.SetActive(true);
 		_roundLbl.text = "ROUND " + _roundCount;
 		yield return new WaitForSeconds(_changeRoundAnimationTime);
 		_roundScreen.SetActive(false);
-		_gameStarted = true;
+		GameStarted = true;
 	}
 
 	private IEnumerator GameOver()
 	{
 		_roundCount = 0;
-		_gameStarted = false;
+		GameStarted = false;
 		_resultsScreen.SetActive(true);
 		_player.HasInvulnerability = true;
 		_enemy.HasInvulnerability = true;
@@ -129,12 +140,12 @@ public class GameController : MonoBehaviour
 		_startGameScreen.SetActive(true);
 		_player.HasInvulnerability = false;
 		_enemy.HasInvulnerability = false;
-		_gameStarted = false;
+		GameStarted = false;
 	}
 
 	private void Update()
 	{
-		if (!_gameStarted)
+		if (!GameStarted)
 		{
 			return;
 		}
