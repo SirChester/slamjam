@@ -151,8 +151,10 @@ public class GameController : MonoBehaviour
 		}
 		UpdatePlayerMovement();
 		UpdatePlayerShooting();
+		
 		UpdateEnemyMovement();
 		UpdateEnemyShooting();
+		
 		UpdateFloors();
 
 //		_animatioText.text = "Animation state:" + _player.AmimationStatus;
@@ -160,54 +162,112 @@ public class GameController : MonoBehaviour
 	
 	private void UpdatePlayerMovement()
 	{
-		if (!_player.CanMove || Input.GetKey(KeyCode.Space))
+		if (!_player.CanMove || IsPlayerFireKey())
 		{
 			return;
 		}
 		
-		if (Input.GetKey(KeyCode.W))
+		if (IsPlayerUpKey())
 		{
 			_player.Up();
 		}
-		if (Input.GetKey(KeyCode.A))
+		if (IsPlayerDownKey())
 		{
 			_player.Left();
 		}
-		if (Input.GetKey(KeyCode.S))
+		if (IsPlayerLeftKey())
 		{
 			_player.Down();
 		}
-		if (Input.GetKey(KeyCode.D))
+		if (IsPlayerRightKey())
 		{
 			_player.Right();
 		}
 	}
-	
+
+	private static bool IsPlayerRightKey()
+	{
+		return Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0.2;
+	}
+
+	private static bool IsPlayerLeftKey()
+	{
+		return Input.GetKey(KeyCode.S) || Input.GetAxis("Horizontal") < -0.2;
+	}
+
+	private static bool IsPlayerDownKey()
+	{
+		return Input.GetKey(KeyCode.A) || Input.GetAxis("Vertical") < -0.2;
+	}
+
+	private static bool IsPlayerUpKey()
+	{
+		return Input.GetKey(KeyCode.W) || Input.GetAxis("Vertical") > 0.2;
+	}
+
+	private static bool IsPlayerFireKey()
+	{
+		return Input.GetKey(KeyCode.Space)
+		       || Input.GetKey(KeyCode.Joystick1Button0)
+		       || Input.GetKey(KeyCode.Joystick1Button1)
+		       || Input.GetKey(KeyCode.Joystick1Button2)
+		       || Input.GetKey(KeyCode.Joystick1Button3);
+	}
+
 	private void UpdateEnemyMovement()
 	{
-		if (!_enemy.CanMove || Input.GetKey(KeyCode.Return))
+		if (!_enemy.CanMove || IsEnemyFireKey())
 		{
 			return;
 		}
 		
-		if (Input.GetKey(KeyCode.I))
+		if (IsEnemyUpKey())
 		{
 			_enemy.Up();
 		}
-		if (Input.GetKey(KeyCode.J))
+		if (IsEnemyLeftKey())
 		{
 			_enemy.Left();
 		}
-		if (Input.GetKey(KeyCode.K))
+		if (IsEnemyDownKey())
 		{
 			_enemy.Down();
 		}
-		if (Input.GetKey(KeyCode.L))
+		if (IsEnemyRightKey())
 		{
 			_enemy.Right();
 		}
 	}
-	
+
+	private static bool IsEnemyDownKey()
+	{
+		return Input.GetKey(KeyCode.K) || Input.GetAxis("Vertical2") < -0.2;
+	}
+
+	private static bool IsEnemyUpKey()
+	{
+		return Input.GetKey(KeyCode.I) || Input.GetAxis("Vertical2") > 0.2;
+	}
+
+	private static bool IsEnemyLeftKey()
+	{
+		return Input.GetKey(KeyCode.J) || Input.GetAxis("Horizontal2") < -0.2;
+	}
+
+	private static bool IsEnemyRightKey()
+	{
+		return Input.GetKey(KeyCode.L) || Input.GetAxis("Horizontal2") > 0.2;
+	}
+
+	private static bool IsEnemyFireKey()
+	{
+		return Input.GetKey(KeyCode.Return)
+		       || Input.GetKey(KeyCode.Joystick2Button0)
+		       || Input.GetKey(KeyCode.Joystick2Button1)
+		       || Input.GetKey(KeyCode.Joystick2Button2)
+		       || Input.GetKey(KeyCode.Joystick2Button3);
+	}
+
 	private void UpdatePlayerShooting()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
