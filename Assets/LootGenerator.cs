@@ -18,7 +18,10 @@ public class LootGenerator : MonoBehaviour
 	private void MakeHealthKit()
 	{
 		var obj = Instantiate(Resources.Load("Prefabs/HealthKit")) as GameObject;
-		obj.transform.position = gameObject.transform.position;
+		if (obj != null)
+		{
+			obj.transform.position = gameObject.transform.position;
+		}
 	}
 
 	private IEnumerator Generation()
@@ -26,7 +29,7 @@ public class LootGenerator : MonoBehaviour
 		while (true)
 		{
 			yield return new WaitForSeconds(Random.Range(_timeRange.x, _timeRange.y));
-//			MakeHealthKit();
+			MakeHealthKit();
 		}
 	}
 }

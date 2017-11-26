@@ -42,14 +42,27 @@ public class Weapon : MonoBehaviour
 		{
 			var needDestroy = _type == collideBullet.BulletType;
 			needDestroy |= collideBullet.BulletType == Type.Rock;
-			needDestroy |= _type == Type.Scissors; //&& collideBullet.BulletType == Type.Rock;
-//			needDestroy |= _type == Type.Rock && collideBullet.BulletType == Type.Paper;
+			needDestroy |= _type == Type.Scissors;
 			if (needDestroy)
 			{
 				Destroy(gameObject);
 				coll.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right * -_forceMultiplier);
 				return;
 			}
+		}
+		
+		if (coll.gameObject.CompareTag("HealthKit"))
+		{
+			if (gameObject.layer == 9)
+			{
+				FindObjectOfType<Player>().MakeDamage(-10);
+			}
+			if (gameObject.layer == 10)
+			{
+				FindObjectOfType<Enemy>().MakeDamage(-10);
+			}
+			Destroy(coll.gameObject);
+			Destroy(gameObject);
 		}
 
 		if (coll.gameObject.CompareTag("Enemy"))
