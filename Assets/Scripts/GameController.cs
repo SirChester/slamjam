@@ -6,14 +6,12 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField] private Image _playerHealth;
 	[SerializeField] private Image _enemyHealth;
-	[SerializeField] private Slider _playerCharge;
-	[SerializeField] private Slider _enemyCharge;
 	[SerializeField] private Character _player;
 	[SerializeField] private Character _enemy;
 	[SerializeField] private Floor _playerFloor;
 	[SerializeField] private Floor _enemyFloor;
-	[SerializeField] private Text _playerScoreLbl;
-	[SerializeField] private Text _enemyScoreLbl;
+	[SerializeField] private SpriteText _playerScoreLbl;
+	[SerializeField] private SpriteText _enemyScoreLbl;
 	[SerializeField] private int _damageByFloor;
 	[SerializeField] private GameObject _startGameScreen;
 	[SerializeField] private GameObject _resultsScreen;
@@ -49,7 +47,7 @@ public class GameController : MonoBehaviour
 		set
 		{
 			_playerScore = value; 
-			_playerScoreLbl.text = _playerScore.ToString();
+			_playerScoreLbl.SetText("PALADIN: " + _playerScore.ToString());
 		}
 	}
 
@@ -59,7 +57,7 @@ public class GameController : MonoBehaviour
 		set
 		{
 			_enemyScore = value; 
-			_enemyScoreLbl.text = _enemyScore.ToString();
+			_enemyScoreLbl.SetText("BEAR: " + _enemyScore.ToString());
 		}
 	}
 
@@ -140,12 +138,6 @@ public class GameController : MonoBehaviour
 		{
 			return;
 		}
-
-		_playerCharge.value = _player.ChargeTime;
-		_enemyCharge.value = _enemy.ChargeTime;
-		
-		
-		
 		UpdatePlayerMovement();
 		UpdatePlayerShooting();
 		UpdateEnemyMovement();
