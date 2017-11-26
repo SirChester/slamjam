@@ -171,11 +171,11 @@ public class GameController : MonoBehaviour
 		{
 			_player.Up();
 		}
-		if (IsPlayerDownKey())
+		if (IsPlayerLeftKey())
 		{
 			_player.Left();
 		}
-		if (IsPlayerLeftKey())
+		if (IsPlayerDownKey())
 		{
 			_player.Down();
 		}
@@ -192,12 +192,12 @@ public class GameController : MonoBehaviour
 
 	private static bool IsPlayerLeftKey()
 	{
-		return Input.GetKey(KeyCode.S) || Input.GetAxis("Horizontal") < -0.2;
+		return Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < -0.2;
 	}
 
 	private static bool IsPlayerDownKey()
 	{
-		return Input.GetKey(KeyCode.A) || Input.GetAxis("Vertical") < -0.2;
+		return Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") < -0.2;
 	}
 
 	private static bool IsPlayerUpKey()
