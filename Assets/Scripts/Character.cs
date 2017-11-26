@@ -285,7 +285,7 @@ public class Character : MonoBehaviour
 	private IEnumerator HealAnimation()
 	{
 		_healParticle.SetActive(true);
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.8f);
 		_healParticle.SetActive(false);
 	}
 
