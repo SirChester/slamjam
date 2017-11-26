@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
 		set
 		{
 			_playerScore = value; 
-			_playerScoreLbl.SetText("PALADIN: " + _playerScore.ToString());
+			_playerScoreLbl.SetText("PALADIN: " + _playerScore);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour
 		set
 		{
 			_enemyScore = value; 
-			_enemyScoreLbl.SetText("BEAR: " + _enemyScore.ToString());
+			_enemyScoreLbl.SetText("CYBEAR: " + _enemyScore);
 		}
 	}
 

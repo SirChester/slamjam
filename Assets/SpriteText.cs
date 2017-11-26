@@ -14,8 +14,8 @@ public class SpriteText : MonoBehaviour
 		var parent = transform.parent;
 		var parentRenderer = parent.GetComponent<Renderer>();
 		var locRenderer = GetComponent<Renderer>();
-		locRenderer.sortingLayerID = parentRenderer.sortingLayerID;
-		locRenderer.sortingOrder = parentRenderer.sortingOrder;
+		locRenderer.sortingLayerID = parentRenderer.sortingLayerID + 5;
+		locRenderer.sortingOrder = parentRenderer.sortingOrder + 5;
 	}
 
 	public void SetText(string str)
