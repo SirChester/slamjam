@@ -101,6 +101,8 @@ public class Character : MonoBehaviour
 		
 		var animator = GetComponent<Animator>();
 		animator.SetInteger("State", 0);
+		
+		SetCharge(0);
 	}
 	
 	private IEnumerator PlayAnimation(int animationId)
