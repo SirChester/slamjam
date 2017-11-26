@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
 	[SerializeField] private Text _resultsLbl;
 	[SerializeField] private Text _roundLbl;
 	[SerializeField] private LootGenerator _generator;
+	[SerializeField] private GameObject _playButton;
 	
 	[SerializeField] private Text _animatioText;
 
@@ -44,6 +46,11 @@ public class GameController : MonoBehaviour
 	{
 		_player.OnHpChanged += PlayerHpDidChange;
 		_enemy.OnHpChanged += EnemyHpDidChange;
+	}
+
+	private void OnEnable()
+	{
+		EventSystem.current.SetSelectedGameObject(_playButton);
 	}
 
 	private void OnDestroy()
