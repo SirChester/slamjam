@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
 	[SerializeField] private int _maxHp;
 	[SerializeField] private GameObject _halfChargeParticle;
 	[SerializeField] private GameObject _chargeParticle;
+	[SerializeField] private GameObject _healParticle;
 
 	public int AmimationStatus = 0;
 
@@ -273,8 +274,19 @@ public class Character : MonoBehaviour
 		}
 		
 		Hp -= damage;
+		if (damage < 0)
+		{
+			StartCoroutine(HealAnimation());
+		}
 		StartCoroutine(PlayAnimation(3));
 		StartCoroutine(ApplyInvul());
+	}
+	
+	private IEnumerator HealAnimation()
+	{
+		_healParticle.SetActive(true);
+		yield return new WaitForSeconds(0.5f);
+		_healParticle.SetActive(false);
 	}
 
 	private IEnumerator ApplyInvul()
