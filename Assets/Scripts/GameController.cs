@@ -208,10 +208,7 @@ public class GameController : MonoBehaviour
 	private static bool IsPlayerFireKey()
 	{
 		return Input.GetKey(KeyCode.Space)
-		       || Input.GetKey(KeyCode.Joystick1Button0)
-		       || Input.GetKey(KeyCode.Joystick1Button1)
-		       || Input.GetKey(KeyCode.Joystick1Button2)
-		       || Input.GetKey(KeyCode.Joystick1Button3);
+		       || Input.GetKey(KeyCode.Joystick1Button1);
 	}
 
 	private void UpdateEnemyMovement()
@@ -262,10 +259,7 @@ public class GameController : MonoBehaviour
 	private static bool IsEnemyFireKey()
 	{
 		return Input.GetKey(KeyCode.Return)
-		       || Input.GetKey(KeyCode.Joystick2Button0)
-		       || Input.GetKey(KeyCode.Joystick2Button1)
-		       || Input.GetKey(KeyCode.Joystick2Button2)
-		       || Input.GetKey(KeyCode.Joystick2Button3);
+		       || Input.GetKey(KeyCode.Joystick2Button1);
 	}
 
 	private void UpdatePlayerShooting()
@@ -286,20 +280,14 @@ public class GameController : MonoBehaviour
 
 	private static bool IsPlayerFireUp()
 	{
-		return Input.GetKeyUp(KeyCode.Space)		       
-		       || Input.GetKeyUp(KeyCode.Joystick1Button0)
-		       || Input.GetKeyUp(KeyCode.Joystick1Button1)
-		       || Input.GetKeyUp(KeyCode.Joystick1Button2)
-		       || Input.GetKeyUp(KeyCode.Joystick1Button3);;
+		return Input.GetKeyUp(KeyCode.Space)
+		       || Input.GetKeyUp(KeyCode.Joystick1Button1);
 	}
 
 	private static bool IsPlayerFireDown()
 	{
 		return Input.GetKeyDown(KeyCode.Space)
-		       || Input.GetKeyDown(KeyCode.Joystick1Button0)
-		       || Input.GetKeyDown(KeyCode.Joystick1Button1)
-		       || Input.GetKeyDown(KeyCode.Joystick1Button2)
-		       || Input.GetKeyDown(KeyCode.Joystick1Button3);
+		       || Input.GetKeyDown(KeyCode.Joystick1Button1);
 	}
 
 	private void UpdateEnemyShooting()
@@ -321,19 +309,13 @@ public class GameController : MonoBehaviour
 	private static bool IsEnemyFireUp()
 	{
 		return Input.GetKeyUp(KeyCode.Return)
-		       || Input.GetKeyUp(KeyCode.Joystick2Button0)
-		       || Input.GetKeyUp(KeyCode.Joystick2Button1)
-		       || Input.GetKeyUp(KeyCode.Joystick2Button2)
-		       || Input.GetKeyUp(KeyCode.Joystick2Button3);
+		       || Input.GetKeyUp(KeyCode.Joystick2Button1);
 	}
 
 	private static bool IsEnemyFireDown()
 	{
 		return Input.GetKeyDown(KeyCode.Return)
-		       || Input.GetKeyDown(KeyCode.Joystick2Button0)
-		       || Input.GetKeyDown(KeyCode.Joystick2Button1)
-		       || Input.GetKeyDown(KeyCode.Joystick2Button2)
-		       || Input.GetKeyDown(KeyCode.Joystick2Button3);
+		       || Input.GetKeyDown(KeyCode.Joystick2Button1);
 	}
 
 	private void UpdateFloors()
