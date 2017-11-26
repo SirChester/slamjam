@@ -200,7 +200,7 @@ public class Character : MonoBehaviour
 	
 	private void Update()
 	{
-		GetComponent<SpriteRenderer>().enabled = !HasInvulnerability || Time.realtimeSinceStartup % 0.32 < 0.16;
+		GetComponent<SpriteRenderer>().enabled = !HasInvulnerability || Time.realtimeSinceStartup % 0.2 < 0.1;
 	}
 	
 	private void InitializePosition()
