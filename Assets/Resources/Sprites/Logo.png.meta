@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: bc8b544d6bc7063419ee2fbe2e43b58f
-timeCreated: 1511684551
+timeCreated: 1511685139
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -72,7 +72,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -83,7 +83,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -92,7 +92,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -108,7 +108,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 540
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -122,7 +122,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 540
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -136,7 +136,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 384
-        y: 540
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -150,7 +150,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 576
-        y: 540
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -164,7 +164,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 768
-        y: 540
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -177,8 +177,8 @@ TextureImporter:
       name: Logo_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 432
+        x: 960
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -191,8 +191,8 @@ TextureImporter:
       name: Logo_6
       rect:
         serializedVersion: 2
-        x: 192
-        y: 432
+        x: 1152
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -205,8 +205,8 @@ TextureImporter:
       name: Logo_7
       rect:
         serializedVersion: 2
-        x: 384
-        y: 432
+        x: 1344
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -219,8 +219,8 @@ TextureImporter:
       name: Logo_8
       rect:
         serializedVersion: 2
-        x: 576
-        y: 432
+        x: 1536
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -233,8 +233,8 @@ TextureImporter:
       name: Logo_9
       rect:
         serializedVersion: 2
-        x: 768
-        y: 432
+        x: 1728
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -247,8 +247,8 @@ TextureImporter:
       name: Logo_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 324
+        x: 1920
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -261,8 +261,8 @@ TextureImporter:
       name: Logo_11
       rect:
         serializedVersion: 2
-        x: 192
-        y: 324
+        x: 2112
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -275,8 +275,8 @@ TextureImporter:
       name: Logo_12
       rect:
         serializedVersion: 2
-        x: 384
-        y: 324
+        x: 2304
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -289,8 +289,8 @@ TextureImporter:
       name: Logo_13
       rect:
         serializedVersion: 2
-        x: 576
-        y: 324
+        x: 2496
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -303,8 +303,8 @@ TextureImporter:
       name: Logo_14
       rect:
         serializedVersion: 2
-        x: 0
-        y: 216
+        x: 2688
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -317,8 +317,8 @@ TextureImporter:
       name: Logo_15
       rect:
         serializedVersion: 2
-        x: 192
-        y: 216
+        x: 2880
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -331,8 +331,8 @@ TextureImporter:
       name: Logo_16
       rect:
         serializedVersion: 2
-        x: 384
-        y: 216
+        x: 3072
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -345,8 +345,8 @@ TextureImporter:
       name: Logo_17
       rect:
         serializedVersion: 2
-        x: 576
-        y: 216
+        x: 3264
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -359,8 +359,8 @@ TextureImporter:
       name: Logo_18
       rect:
         serializedVersion: 2
-        x: 0
-        y: 108
+        x: 3456
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -373,8 +373,8 @@ TextureImporter:
       name: Logo_19
       rect:
         serializedVersion: 2
-        x: 192
-        y: 108
+        x: 3648
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -387,8 +387,8 @@ TextureImporter:
       name: Logo_20
       rect:
         serializedVersion: 2
-        x: 384
-        y: 108
+        x: 3840
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -401,8 +401,8 @@ TextureImporter:
       name: Logo_21
       rect:
         serializedVersion: 2
-        x: 576
-        y: 108
+        x: 4032
+        y: 0
         width: 192
         height: 108
       alignment: 0
@@ -415,7 +415,7 @@ TextureImporter:
       name: Logo_22
       rect:
         serializedVersion: 2
-        x: 0
+        x: 4224
         y: 0
         width: 192
         height: 108
@@ -429,7 +429,7 @@ TextureImporter:
       name: Logo_23
       rect:
         serializedVersion: 2
-        x: 192
+        x: 4416
         y: 0
         width: 192
         height: 108
@@ -443,7 +443,7 @@ TextureImporter:
       name: Logo_24
       rect:
         serializedVersion: 2
-        x: 384
+        x: 4608
         y: 0
         width: 192
         height: 108
@@ -457,7 +457,7 @@ TextureImporter:
       name: Logo_25
       rect:
         serializedVersion: 2
-        x: 576
+        x: 4800
         y: 0
         width: 192
         height: 108
