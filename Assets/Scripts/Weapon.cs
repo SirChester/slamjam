@@ -55,11 +55,11 @@ public class Weapon : MonoBehaviour
 		{
 			if (gameObject.layer == 9)
 			{
-				FindObjectOfType<Player>().MakeDamage(-10);
+				FindObjectOfType<Player>().MakeDamage(-25);
 			}
 			if (gameObject.layer == 10)
 			{
-				FindObjectOfType<Enemy>().MakeDamage(-10);
+				FindObjectOfType<Enemy>().MakeDamage(-25);
 			}
 			Destroy(coll.gameObject);
 			Destroy(gameObject);
