@@ -270,11 +270,11 @@ public class GameController : MonoBehaviour
 
 	private void UpdatePlayerShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (IsPlayerFireDown())
 		{
 			_player.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.Space))
+		if (IsPlayerFireUp())
 		{
 			if (_player.CanShootByIndex(_player.ChargeIndex))
 			{
@@ -283,14 +283,32 @@ public class GameController : MonoBehaviour
 			_player.StopShootWithCharge();
 		}
 	}
-	
+
+	private static bool IsPlayerFireUp()
+	{
+		return Input.GetKeyUp(KeyCode.Space)		       
+		       || Input.GetKeyUp(KeyCode.Joystick1Button0)
+		       || Input.GetKeyUp(KeyCode.Joystick1Button1)
+		       || Input.GetKeyUp(KeyCode.Joystick1Button2)
+		       || Input.GetKeyUp(KeyCode.Joystick1Button3);;
+	}
+
+	private static bool IsPlayerFireDown()
+	{
+		return Input.GetKeyDown(KeyCode.Space)
+		       || Input.GetKeyDown(KeyCode.Joystick1Button0)
+		       || Input.GetKeyDown(KeyCode.Joystick1Button1)
+		       || Input.GetKeyDown(KeyCode.Joystick1Button2)
+		       || Input.GetKeyDown(KeyCode.Joystick1Button3);
+	}
+
 	private void UpdateEnemyShooting()
 	{
-		if (Input.GetKeyDown(KeyCode.Return))
+		if (IsEnemyFireDown())
 		{
 			_enemy.StartShootWithCharge();
 		}
-		if (Input.GetKeyUp(KeyCode.Return))
+		if (IsEnemyFireUp())
 		{
 			if (_enemy.CanShootByIndex(_enemy.ChargeIndex))
 			{
@@ -299,7 +317,25 @@ public class GameController : MonoBehaviour
 			_enemy.StopShootWithCharge();
 		}
 	}
-	
+
+	private static bool IsEnemyFireUp()
+	{
+		return Input.GetKeyUp(KeyCode.Return)
+		       || Input.GetKeyUp(KeyCode.Joystick2Button0)
+		       || Input.GetKeyUp(KeyCode.Joystick2Button1)
+		       || Input.GetKeyUp(KeyCode.Joystick2Button2)
+		       || Input.GetKeyUp(KeyCode.Joystick2Button3);
+	}
+
+	private static bool IsEnemyFireDown()
+	{
+		return Input.GetKeyDown(KeyCode.Return)
+		       || Input.GetKeyDown(KeyCode.Joystick2Button0)
+		       || Input.GetKeyDown(KeyCode.Joystick2Button1)
+		       || Input.GetKeyDown(KeyCode.Joystick2Button2)
+		       || Input.GetKeyDown(KeyCode.Joystick2Button3);
+	}
+
 	private void UpdateFloors()
 	{
 		var needToDamagePlayer = _playerFloor.damageByPlayer(_player.PositionOnBoard);
